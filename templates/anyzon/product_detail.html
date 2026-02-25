@@ -1,0 +1,800 @@
+{% extends 'anyzon/base.html' %}
+
+{% block extra_head %}
+<style>
+    /* ── Page Base ──────────────────────────────────────── */
+    .pd-page {
+        background: #f0f2f2;
+        min-height: 100vh;
+    }
+
+    /* ── Breadcrumb ─────────────────────────────────────── */
+    .pd-breadcrumb {
+        background: #fff;
+        border-bottom: 1px solid #e4e4e4;
+        padding: 10px 0;
+        font-size: 13px;
+    }
+
+    .pd-breadcrumb a {
+        color: #007185;
+        text-decoration: none;
+    }
+
+    .pd-breadcrumb a:hover {
+        color: #C7511F;
+        text-decoration: underline;
+    }
+
+    .pd-breadcrumb span {
+        color: #555;
+    }
+
+    /* ── Main Card ──────────────────────────────────────── */
+    .pd-card {
+        background: #fff;
+        border-radius: 0;
+        padding: 28px 24px;
+        margin-bottom: 16px;
+    }
+
+    /* ── Image Panel ────────────────────────────────────── */
+    .pd-img-panel {
+        position: sticky;
+        top: 80px;
+    }
+
+    .pd-img-main-wrap {
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        overflow: hidden;
+        background: #fafafa;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 420px;
+        margin-bottom: 12px;
+        position: relative;
+    }
+
+    .pd-img-main-wrap:hover .pd-zoom-hint {
+        opacity: 1;
+    }
+
+    .pd-zoom-hint {
+        position: absolute;
+        bottom: 10px;
+        right: 12px;
+        background: rgba(0, 0, 0, .55);
+        color: #fff;
+        font-size: 11px;
+        padding: 3px 8px;
+        border-radius: 10px;
+        opacity: 0;
+        transition: opacity .2s;
+    }
+
+    .pd-img-main {
+        max-width: 100%;
+        max-height: 400px;
+        object-fit: contain;
+        transition: transform .4s;
+        cursor: zoom-in;
+    }
+
+    .pd-img-main:hover {
+        transform: scale(1.08);
+    }
+
+    /* ── Product Info ───────────────────────────────────── */
+    .pd-category-tag {
+        font-size: 12px;
+        color: #007185;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: .5px;
+        text-decoration: none;
+        display: inline-block;
+        margin-bottom: 8px;
+    }
+
+    .pd-title {
+        font-size: 22px;
+        font-weight: 500;
+        line-height: 1.35;
+        color: #0F1111;
+        margin-bottom: 8px;
+    }
+
+    .pd-rating-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 12px;
+        flex-wrap: wrap;
+    }
+
+    .pd-stars {
+        color: #FFA41C;
+        font-size: 15px;
+    }
+
+    .pd-rating-count {
+        color: #007185;
+        font-size: 13px;
+        text-decoration: none;
+    }
+
+    .pd-verified-badge {
+        background: #dff0da;
+        color: #2d6a4f;
+        font-size: 11px;
+        font-weight: 700;
+        padding: 2px 8px;
+        border-radius: 10px;
+    }
+
+    /* ── Price Block ────────────────────────────────────── */
+    .pd-price-block {
+        background: linear-gradient(135deg, #fff8f0 0%, #fff 100%);
+        border: 1px solid #f0e0cc;
+        border-radius: 8px;
+        padding: 16px 18px;
+        margin: 16px 0;
+    }
+
+    .pd-discount-pct {
+        color: #CC0C39;
+        font-size: 20px;
+        font-weight: 800;
+        margin-right: 8px;
+    }
+
+    .pd-price-current {
+        font-size: 36px;
+        font-weight: 400;
+        color: #0F1111;
+    }
+
+    .pd-price-sup {
+        font-size: 18px;
+        vertical-align: top;
+        margin-top: 8px;
+        display: inline-block;
+    }
+
+    .pd-mrp-line {
+        font-size: 13px;
+        color: #767676;
+        margin-top: 4px;
+    }
+
+    .pd-mrp-line s {
+        margin-right: 4px;
+    }
+
+    .pd-tax-note {
+        font-size: 12px;
+        color: #555;
+        margin-top: 4px;
+    }
+
+    .pd-deal-badge {
+        display: inline-block;
+        background: #CC0C39;
+        color: #fff;
+        font-size: 12px;
+        font-weight: 700;
+        padding: 3px 10px;
+        border-radius: 3px;
+        margin-top: 8px;
+    }
+
+    /* ── Offers ─────────────────────────────────────────── */
+    .pd-offers-title {
+        font-size: 15px;
+        font-weight: 700;
+        margin-bottom: 12px;
+        color: #0F1111;
+    }
+
+    .pd-offer-item {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        margin-bottom: 10px;
+        font-size: 13px;
+    }
+
+    .pd-offer-icon {
+        color: #007600;
+        font-size: 16px;
+        flex-shrink: 0;
+        margin-top: 1px;
+    }
+
+    /* ── Description ────────────────────────────────────── */
+    .pd-desc-section {
+        background: #fff;
+        padding: 28px 24px;
+        margin-bottom: 16px;
+    }
+
+    .pd-section-title {
+        font-size: 20px;
+        font-weight: 700;
+        border-bottom: 2px solid #febd69;
+        padding-bottom: 8px;
+        margin-bottom: 18px;
+        color: #0F1111;
+    }
+
+    .pd-desc-text {
+        font-size: 14px;
+        color: #333;
+        line-height: 1.8;
+    }
+
+    .pd-spec-table {
+        width: 100%;
+        font-size: 13px;
+    }
+
+    .pd-spec-table tr:nth-child(odd) td {
+        background: #f7f7f7;
+    }
+
+    .pd-spec-table td {
+        padding: 10px 14px;
+        vertical-align: top;
+        border: 1px solid #e8e8e8;
+    }
+
+    .pd-spec-table td:first-child {
+        font-weight: 600;
+        color: #555;
+        width: 35%;
+    }
+
+    /* ── About Items ────────────────────────────────────── */
+    .pd-about-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .pd-about-list li {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 7px 0;
+        font-size: 14px;
+        color: #333;
+    }
+
+    .pd-about-list li::before {
+        content: '✓';
+        color: #007600;
+        font-weight: 700;
+        flex-shrink: 0;
+        margin-top: 2px;
+    }
+
+    /* ── Buy Box ────────────────────────────────────────── */
+    .pd-buy-box {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 18px;
+        background: #fff;
+        position: sticky;
+        top: 80px;
+    }
+
+    .pd-buy-price {
+        font-size: 28px;
+        font-weight: 400;
+        color: #0F1111;
+        margin-bottom: 6px;
+    }
+
+    .pd-buy-price sup {
+        font-size: 16px;
+        vertical-align: top;
+        margin-top: 6px;
+        display: inline-block;
+    }
+
+    .pd-delivery-line {
+        font-size: 13px;
+        color: #0F1111;
+        margin-bottom: 4px;
+    }
+
+    .pd-delivery-line strong {
+        color: #007185;
+    }
+
+    .pd-in-stock {
+        color: #007600;
+        font-size: 16px;
+        font-weight: 600;
+        margin: 12px 0;
+    }
+
+    .pd-qty-row {
+        background: #f0f2f2;
+        border-radius: 6px;
+        padding: 6px 10px;
+        font-size: 13px;
+        margin-bottom: 12px;
+    }
+
+    .btn-pd-cart {
+        display: block;
+        width: 100%;
+        text-align: center;
+        background: #FFD814;
+        border: 1px solid #FCD200;
+        border-radius: 20px;
+        padding: 10px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #0F1111;
+        text-decoration: none;
+        margin-bottom: 8px;
+        transition: background .15s, transform .15s;
+    }
+
+    .btn-pd-cart:hover {
+        background: #F7CA00;
+        color: #0F1111;
+        transform: translateY(-1px);
+    }
+
+    .btn-pd-buy {
+        display: block;
+        width: 100%;
+        text-align: center;
+        background: #FFA41C;
+        border: 1px solid #FF8F00;
+        border-radius: 20px;
+        padding: 10px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #0F1111;
+        text-decoration: none;
+        margin-bottom: 10px;
+        transition: background .15s, transform .15s;
+    }
+
+    .btn-pd-buy:hover {
+        background: #e8940e;
+        color: #0F1111;
+        transform: translateY(-1px);
+    }
+
+    .pd-secure-note {
+        font-size: 12px;
+        color: #555;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .pd-seller-info {
+        font-size: 12px;
+        color: #555;
+        margin-top: 12px;
+        padding-top: 10px;
+        border-top: 1px solid #eee;
+    }
+
+    .pd-seller-info a {
+        color: #007185;
+        text-decoration: none;
+    }
+
+    /* ── Related Products ────────────────────────────────── */
+    .pd-related {
+        background: #fff;
+        padding: 28px 24px;
+        margin-bottom: 40px;
+    }
+
+    .rel-card {
+        background: #fff;
+        border: 1px solid #e8e8e8;
+        border-radius: 6px;
+        overflow: hidden;
+        height: 100%;
+        transition: transform .2s, box-shadow .2s;
+        text-decoration: none;
+        display: block;
+        color: #0F1111;
+    }
+
+    .rel-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, .1);
+        color: #0F1111;
+    }
+
+    .rel-card-img {
+        height: 160px;
+        background: #f8f8f8;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px;
+    }
+
+    .rel-card-img img {
+        max-height: 140px;
+        max-width: 100%;
+        object-fit: contain;
+    }
+
+    .rel-card-body {
+        padding: 12px;
+    }
+
+    .rel-card-name {
+        font-size: 13px;
+        font-weight: 500;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        min-height: 36px;
+        margin-bottom: 6px;
+        color: #0F1111;
+    }
+
+    .rel-card-price {
+        font-size: 17px;
+        font-weight: 700;
+        color: #0F1111;
+    }
+
+    .rel-card-price sup {
+        font-size: 11px;
+        vertical-align: super;
+    }
+
+    .rel-stars {
+        color: #FFA41C;
+        font-size: 11px;
+        margin-bottom: 6px;
+    }
+
+    /* ── Responsive ─────────────────────────────────────── */
+    @media (max-width: 767px) {
+        .pd-img-main-wrap {
+            height: 280px;
+        }
+
+        .pd-price-current {
+            font-size: 28px;
+        }
+
+        .pd-buy-box {
+            position: static;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="pd-page">
+
+    <!-- Breadcrumb -->
+    <div class="pd-breadcrumb">
+        <div class="container-fluid px-4">
+            <a href="{% url 'product_list' %}">Home</a>
+            <span class="mx-1">›</span>
+            {% if product.category %}
+            <a href="{% url 'category_landing' product.category.slug %}">{{ product.category.name }}</a>
+            <span class="mx-1">›</span>
+            {% endif %}
+            <span>{{ product.name|truncatechars:55 }}</span>
+        </div>
+    </div>
+
+    <!-- Main Product Area -->
+    <div class="container-fluid px-4 pt-3">
+        <div class="row g-3">
+
+            <!-- ── Column 1: Image ──────────────────────── -->
+            <div class="col-lg-5 col-md-6">
+                <div class="pd-img-panel">
+                    <div class="pd-card">
+                        <div class="pd-img-main-wrap">
+                            <img src="{{ product.image_url }}" class="pd-img-main" alt="{{ product.name }}"
+                                id="mainProductImg"
+                                onerror="this.onerror=null;this.src='https://placehold.co/600x500/f8f8f8/aaa?text={{ product.name|urlencode }}'">
+                            <span class="pd-zoom-hint">🔍 Hover to zoom</span>
+                        </div>
+
+                        <!-- Stock / Delivery Chips -->
+                        <div class="d-flex gap-2 flex-wrap mt-2">
+                            <span class="badge bg-success fs-6 py-2 px-3 fw-normal rounded-pill">✓ In Stock</span>
+                            <span class="badge bg-light text-dark border fs-6 py-2 px-3 fw-normal rounded-pill">🚚 FREE
+                                Delivery</span>
+                            <span class="badge bg-light text-dark border fs-6 py-2 px-3 fw-normal rounded-pill">↩ 30-Day
+                                Returns</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── Column 2: Details ────────────────────── -->
+            <div class="col-lg-4 col-md-6">
+                <div class="pd-card">
+                    <!-- Category Tag -->
+                    {% if product.category %}
+                    <a href="{% url 'category_landing' product.category.slug %}" class="pd-category-tag">
+                        {{ product.category.name }}
+                    </a>
+                    {% endif %}
+
+                    <!-- Product Title -->
+                    <h1 class="pd-title">{{ product.name }}</h1>
+
+                    <!-- Rating Row -->
+                    <div class="pd-rating-row">
+                        <span class="pd-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span class="text-dark small ms-1">4.5</span>
+                        </span>
+                        <a href="#reviews" class="pd-rating-count">4,234 ratings</a>
+                        <span class="pd-verified-badge">✓ Amazon's Choice</span>
+                    </div>
+
+                    <hr class="my-2">
+
+                    <!-- Price Block -->
+                    <div class="pd-price-block">
+                        <div class="d-flex align-items-baseline flex-wrap gap-2">
+                            <span class="pd-discount-pct">-15%</span>
+                            <span class="pd-price-current">
+                                <span class="pd-price-sup">₹</span>{{ product.price|floatformat:0 }}
+                            </span>
+                        </div>
+                        <div class="pd-mrp-line">
+                            M.R.P.:
+                            <s>₹{{ product.price|add:500|floatformat:0 }}</s>
+                            <span class="text-success fw-bold ms-1">You save ₹500</span>
+                        </div>
+                        <div class="pd-tax-note">Inclusive of all taxes</div>
+                        <span class="pd-deal-badge">🔥 Limited Time Deal</span>
+                    </div>
+
+                    <!-- Bank Offers -->
+                    <hr class="my-3">
+                    <p class="pd-offers-title"><i class="fas fa-percentage text-danger me-2"></i>Special Offers</p>
+
+                    <div class="pd-offer-item">
+                        <span class="pd-offer-icon"><i class="fas fa-check-circle"></i></span>
+                        <div>
+                            <strong>Bank Offer:</strong> Upto ₹1,500 discount on select Credit Cards.
+                            <a href="#" class="text-info">See all offers</a>
+                        </div>
+                    </div>
+                    <div class="pd-offer-item">
+                        <span class="pd-offer-icon"><i class="fas fa-check-circle"></i></span>
+                        <div>
+                            <strong>GST Invoice:</strong> Save up to 28% on business purchases.
+                            <a href="#" class="text-info">Activate now</a>
+                        </div>
+                    </div>
+                    <div class="pd-offer-item">
+                        <span class="pd-offer-icon"><i class="fas fa-check-circle"></i></span>
+                        <div>
+                            <strong>EMI:</strong> No-cost EMI starting from ₹{{ product.price|floatformat:0|slice:":4"
+                            }}/month.
+                        </div>
+                    </div>
+
+                    <!-- About This Item -->
+                    <hr class="my-3">
+                    <p class="pd-offers-title"><i class="fas fa-info-circle text-primary me-2"></i>About This Item</p>
+                    <ul class="pd-about-list">
+                        <li>{{ product.description }}</li>
+                        <li>Genuine product from Anyzon authorized seller.</li>
+                        <li>Premium build quality with industry-standard materials.</li>
+                        <li>Official 1-year brand warranty from the date of purchase.</li>
+                        <li>Fast delivery available — Get it by <strong>Tomorrow</strong>.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ── Column 3: Buy Box ────────────────────── -->
+            <div class="col-lg-3 col-12">
+                <div class="pd-buy-box">
+                    <div class="pd-buy-price">
+                        <sup>₹</sup>{{ product.price|floatformat:2 }}
+                    </div>
+                    <div class="small text-success fw-bold mb-1">-15% below typical price</div>
+
+                    <div class="pd-delivery-line">
+                        <strong>FREE delivery</strong> tomorrow, if you order in the next 4 hours.
+                    </div>
+
+                    <div class="pd-in-stock">🟢 In Stock</div>
+
+                    <!-- Qty -->
+                    <div class="pd-qty-row d-flex justify-content-between align-items-center">
+                        <span>Quantity</span>
+                        <select class="form-select form-select-sm" style="width:80px;">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6+</option>
+                        </select>
+                    </div>
+
+                    <a href="{% url 'add_to_cart' product.id %}" class="btn-pd-cart">
+                        🛒 Add to Cart
+                    </a>
+                    <a href="{% url 'checkout' %}" class="btn-pd-buy">
+                        ⚡ Buy Now
+                    </a>
+
+                    <div class="pd-secure-note">
+                        <i class="fas fa-lock"></i> Secure transaction
+                    </div>
+
+                    <div class="pd-seller-info">
+                        <div class="mb-1"><span class="text-muted">Ships from</span> <a href="#">Anyzon</a></div>
+                        <div class="mb-1"><span class="text-muted">Sold by</span> <a href="#">Anyzon Retail Pvt.
+                                Ltd.</a></div>
+                        <div><span class="text-muted">Returns</span> Eligible for 30-day return</div>
+                    </div>
+
+                    <!-- Wishlist / Share -->
+                    <div class="d-flex gap-2 mt-3">
+                        <a href="{% url 'wishlist' %}" class="btn btn-outline-secondary btn-sm flex-fill"
+                            style="border-radius: 20px; font-size: 12px;">
+                            <i class="fas fa-heart text-danger me-1"></i> Wishlist
+                        </a>
+                        <button class="btn btn-outline-secondary btn-sm flex-fill"
+                            style="border-radius: 20px; font-size: 12px;">
+                            <i class="fas fa-share-alt me-1"></i> Share
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Full Description & Specs ─────────────────────── -->
+    <div class="container-fluid px-4 mt-3">
+        <div class="pd-desc-section">
+            <h2 class="pd-section-title">Product Description</h2>
+            <p class="pd-desc-text">{{ product.description }}</p>
+
+            <p class="pd-desc-text mt-3">
+                This is an authentic product sold by <strong>Anyzon</strong>, India's most trusted online marketplace.
+                Every item undergoes rigorous quality checks before reaching your doorstep.
+                Whether you're gifting or buying for yourself, rest assured of a premium experience backed by our
+                hassle-free return and refund policy.
+            </p>
+        </div>
+
+        <!-- Product Specifications Table -->
+        <div class="pd-desc-section">
+            <h2 class="pd-section-title">Technical Specifications</h2>
+            <table class="pd-spec-table">
+                <tbody>
+                    <tr>
+                        <td>Product Name</td>
+                        <td>{{ product.name }}</td>
+                    </tr>
+                    {% if product.category %}
+                    <tr>
+                        <td>Category</td>
+                        <td>{{ product.category.name }}</td>
+                    </tr>
+                    {% endif %}
+                    <tr>
+                        <td>Price</td>
+                        <td><strong>₹{{ product.price|floatformat:2 }}</strong> (Inclusive of all taxes)</td>
+                    </tr>
+                    <tr>
+                        <td>M.R.P.</td>
+                        <td><s>₹{{ product.price|add:500|floatformat:0 }}</s> (15% off)</td>
+                    </tr>
+                    <tr>
+                        <td>Availability</td>
+                        <td><span class="text-success fw-bold">In Stock</span> — {{ product.stock }} units available
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Delivery</td>
+                        <td>FREE Delivery — arrives by <strong>Tomorrow</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Warranty</td>
+                        <td>1 Year Manufacturer Warranty</td>
+                    </tr>
+                    <tr>
+                        <td>Sold By</td>
+                        <td>Anyzon Retail Pvt. Ltd.</td>
+                    </tr>
+                    <tr>
+                        <td>Return Policy</td>
+                        <td>30-Day Hassle-Free Return &amp; Replacement</td>
+                    </tr>
+                    <tr>
+                        <td>Payment Options</td>
+                        <td>Credit/Debit Card, UPI, Net Banking, Cash On Delivery, EMI</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ── Related Products ──────────────────────────────── -->
+    {% if related_products %}
+    <div class="container-fluid px-4">
+        <div class="pd-related">
+            <h2 class="pd-section-title">Customers Also Viewed</h2>
+            <div class="row g-3">
+                {% for rp in related_products %}
+                <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+                    <a href="{% url 'product_detail' rp.slug %}" class="rel-card">
+                        <div class="rel-card-img">
+                            <img src="{{ rp.image_url }}" alt="{{ rp.name }}" loading="lazy"
+                                onerror="this.onerror=null;this.src='https://placehold.co/300x200/f8f8f8/aaa?text={{ rp.name|urlencode }}'">
+                        </div>
+                        <div class="rel-card-body">
+                            <div class="rel-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span class="text-dark small ms-1">(1,234)</span>
+                            </div>
+                            <div class="rel-card-name">{{ rp.name }}</div>
+                            <div class="rel-card-price"><sup>₹</sup>{{ rp.price|floatformat:0 }}</div>
+                            <div class="small text-success">FREE Delivery</div>
+                            <a href="{% url 'add_to_cart' rp.id %}" class="btn btn-sm w-100 mt-2"
+                                style="background:#FFD814;border-radius:12px;font-size:12px;font-weight:600;"
+                                onclick="event.preventDefault(); window.location='{% url 'add_to_cart' rp.id %}'">
+                                Add to Cart
+                            </a>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+
+<script>
+    // Image zoom with mouse position
+    const img = document.getElementById('mainProductImg');
+    if (img) {
+        img.addEventListener('mousemove', (e) => {
+            const rect = img.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width - 0.5) * 6;
+            const y = ((e.clientY - rect.top) / rect.height - 0.5) * 6;
+            img.style.transformOrigin = `${50 + x * 10}% ${50 + y * 10}%`;
+        });
+        img.addEventListener('mouseleave', () => {
+            img.style.transformOrigin = 'center';
+        });
+    }
+</script>
+{% endblock %}

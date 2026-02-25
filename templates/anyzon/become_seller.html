@@ -1,0 +1,268 @@
+{% extends 'anyzon/base.html' %}
+
+{% block extra_head %}
+<style>
+    .seller-hero {
+        background: linear-gradient(135deg, #f08804 0%, #febd69 100%);
+        padding: 70px 30px 50px;
+        text-align: center;
+    }
+
+    .seller-hero h1 {
+        font-size: 2.8rem;
+        font-weight: 800;
+        color: #0f1111;
+    }
+
+    .seller-hero p {
+        font-size: 1.15rem;
+        color: #444;
+        max-width: 600px;
+        margin: 14px auto 0;
+    }
+
+    .benefit-card {
+        background: white;
+        border-radius: 10px;
+        padding: 28px 22px;
+        text-align: center;
+        height: 100%;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, .07);
+        transition: transform .2s;
+    }
+
+    .benefit-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .benefit-icon {
+        font-size: 2.8rem;
+        margin-bottom: 14px;
+    }
+
+    .benefit-card h5 {
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+    .benefit-card p {
+        font-size: 14px;
+        color: #555;
+        margin: 0;
+    }
+
+    .step-circle {
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #f08804, #febd69);
+        color: #0f1111;
+        font-weight: 800;
+        font-size: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 16px;
+        box-shadow: 0 3px 12px rgba(240, 136, 4, .3);
+    }
+
+    .step-card {
+        text-align: center;
+    }
+
+    .step-card h5 {
+        font-weight: 700;
+    }
+
+    .step-card p {
+        font-size: 14px;
+        color: #555;
+    }
+
+    .seller-form-card {
+        background: white;
+        border-radius: 12px;
+        padding: 36px 32px;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, .1);
+    }
+
+    .form-control:focus {
+        border-color: #f08804;
+        box-shadow: 0 0 0 3px rgba(240, 136, 4, .15);
+    }
+
+    .btn-register {
+        background: linear-gradient(135deg, #f08804, #febd69);
+        border: none;
+        border-radius: 30px;
+        padding: 12px 40px;
+        font-weight: 700;
+        font-size: 16px;
+        color: #0f1111;
+        width: 100%;
+        transition: opacity .2s;
+    }
+
+    .btn-register:hover {
+        opacity: .88;
+    }
+
+    .trust-badge {
+        display: flex;
+        gap: 8px;
+        align-items: flex-start;
+        background: #fff8e1;
+        border-radius: 8px;
+        padding: 14px;
+        margin-bottom: 12px;
+    }
+
+    .trust-badge i {
+        color: #f08804;
+        font-size: 18px;
+        margin-top: 2px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero -->
+<div class="seller-hero">
+    <h1>🏪 Sell on Anyzon</h1>
+    <p>Join 2 million+ sellers reaching 50 million customers across India. Zero listing fees. Start today!</p>
+    <a href="#register" class="btn btn-dark rounded-pill px-5 py-2 mt-4 fw-bold">Register as a Seller →</a>
+</div>
+
+<!-- Benefits -->
+<div class="py-5" style="background:#eaeded;">
+    <div class="container">
+        <h2 class="text-center fw-800 mb-4" style="font-weight:800;">Why Sell on Anyzon?</h2>
+        <div class="row g-4">
+            <div class="col-md-3 col-6">
+                <div class="benefit-card">
+                    <div class="benefit-icon">📦</div>
+                    <h5>Easy Listings</h5>
+                    <p>List products in minutes with our simple bulk-upload dashboard.</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="benefit-card">
+                    <div class="benefit-icon">💰</div>
+                    <h5>Fast Payments</h5>
+                    <p>Get paid within 7 days of delivery, directly to your bank account.</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="benefit-card">
+                    <div class="benefit-icon">📊</div>
+                    <h5>Growth Insights</h5>
+                    <p>Real-time analytics dashboard to track sales, returns, and reviews.</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="benefit-card">
+                    <div class="benefit-icon">🚚</div>
+                    <h5>Anyzon Fulfillment</h5>
+                    <p>Store your products in our warehouses. We pick, pack, and ship for you.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- How It Works -->
+<div class="py-5" style="background:white;">
+    <div class="container">
+        <h2 class="text-center fw-800 mb-5" style="font-weight:800;">How to Get Started</h2>
+        <div class="row g-4">
+            <div class="col-md-3">
+                <div class="step-card">
+                    <div class="step-circle">1</div>
+                    <h5>Register</h5>
+                    <p>Create your free seller account with your GST and bank details.</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="step-card">
+                    <div class="step-circle">2</div>
+                    <h5>List Products</h5>
+                    <p>Upload product details, images, and pricing using our smart tools.</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="step-card">
+                    <div class="step-circle">3</div>
+                    <h5>Receive Orders</h5>
+                    <p>Get notified as customers purchase your products 24/7.</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="step-card">
+                    <div class="step-circle">4</div>
+                    <h5>Get Paid</h5>
+                    <p>Receive fast, secure payments directly to your account.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Register Form -->
+<div class="py-5" style="background:#eaeded;" id="register">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-7">
+                <div class="seller-form-card">
+                    <h3 class="fw-800 mb-1" style="font-weight:800;">Start Selling Today</h3>
+                    <p class="text-secondary mb-4">Free to register. No monthly fees.</p>
+
+                    <div class="trust-badge"><i class="fas fa-check-circle"></i><span>Your information is secured with
+                            256-bit SSL encryption.</span></div>
+
+                    <form>
+                        {% csrf_token %}
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-600">Full Name</label>
+                                <input type="text" class="form-control" placeholder="Rahul Gupta" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-600">Business Name</label>
+                                <input type="text" class="form-control" placeholder="Gupta Enterprises" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-600">Email Address</label>
+                                <input type="email" class="form-control" placeholder="rahul@example.com" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-600">Mobile Number</label>
+                                <input type="tel" class="form-control" placeholder="+91 98765 43210" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-600">GST Number</label>
+                                <input type="text" class="form-control" placeholder="27AAPFU0939F1ZV">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-600">Product Category</label>
+                                <select class="form-select">
+                                    {% for cat in categories %}
+                                    <option>{{ cat.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-600">Short Business Description</label>
+                                <textarea class="form-control" rows="3"
+                                    placeholder="Tell us about your business and what you sell..."></textarea>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn-register">Register as Seller 🚀</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,443 @@
+{% extends 'anyzon/base.html' %}
+
+{% block extra_head %}
+<style>
+    /* ─── Variables ─── */
+    :root {
+        --az-link2: #007185;
+        --az-hover: #c7511f;
+        --az-border: #d5d9d9;
+        --az-muted: #565959;
+        --card-bg: #ffffff;
+    }
+
+    body {
+        background-color: #f3f3f3;
+    }
+
+    /* ─── Page Title ─── */
+    .account-page-title {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: #0F1111;
+        margin: 24px 0 20px;
+    }
+
+    /* ══════════════════════════════════════
+       BIG TILE CARDS (top section)
+    ══════════════════════════════════════ */
+    .tile-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+        margin-bottom: 24px;
+    }
+
+    @media (max-width: 900px) {
+        .tile-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 560px) {
+        .tile-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .tile-card {
+        background: var(--card-bg);
+        border: 1px solid var(--az-border);
+        border-radius: 8px;
+        padding: 18px 18px 18px 16px;
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        text-decoration: none;
+        color: inherit;
+        cursor: pointer;
+        transition: box-shadow .18s ease, border-color .18s ease;
+        min-height: 110px;
+    }
+
+    .tile-card:hover {
+        box-shadow: 0 2px 10px rgba(0, 0, 0, .12);
+        border-color: #a9b6bf;
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .tile-icon {
+        width: 60px;
+        height: 60px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        border-radius: 6px;
+        background: #f5f5f5;
+    }
+
+    /* coloured icon backgrounds to mimic Amazon's image icons */
+    .ic-amber {
+        background: #fff8e1;
+    }
+
+    .ic-blue {
+        background: #e3f2fd;
+    }
+
+    .ic-teal {
+        background: #e0f7fa;
+    }
+
+    .ic-orange {
+        background: #fff3e0;
+    }
+
+    .ic-purple {
+        background: #f3e5f5;
+    }
+
+    .ic-green {
+        background: #e8f5e9;
+    }
+
+    .ic-red {
+        background: #fce4ec;
+    }
+
+    .ic-indigo {
+        background: #e8eaf6;
+    }
+
+    .tile-text h3 {
+        font-size: 15px;
+        font-weight: 700;
+        margin: 0 0 5px;
+        color: #0F1111;
+        line-height: 1.3;
+    }
+
+    .tile-text p {
+        font-size: 13px;
+        color: var(--az-muted);
+        margin: 0;
+        line-height: 1.45;
+    }
+
+    /* ══════════════════════════════════════
+       LINK-LIST SECTIONS (lower section)
+    ══════════════════════════════════════ */
+    .link-section-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+    }
+
+    @media (max-width: 900px) {
+        .link-section-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 560px) {
+        .link-section-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .link-box {
+        background: var(--card-bg);
+        border: 1px solid var(--az-border);
+        border-radius: 8px;
+        padding: 18px 18px 20px;
+    }
+
+    .link-box h4 {
+        font-size: 15px;
+        font-weight: 700;
+        color: #0F1111;
+        margin: 0 0 12px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid #f0f2f2;
+    }
+
+    .link-box ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .link-box ul li {
+        margin-bottom: 7px;
+    }
+
+    .link-box ul li a {
+        color: var(--az-link2);
+        text-decoration: none;
+        font-size: 13.5px;
+    }
+
+    .link-box ul li a:hover {
+        color: var(--az-hover);
+        text-decoration: underline;
+    }
+
+    /* ─── Divider label ─── */
+    .section-divider {
+        font-size: 11px;
+        font-weight: 700;
+        color: #888;
+        letter-spacing: .8px;
+        text-transform: uppercase;
+        margin: 28px 0 12px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width:1000px;">
+
+    <div class="profile-header-summary d-flex align-items-center mb-4 p-3 bg-white border rounded shadow-sm">
+        <img src="{{ user.profile.profile_picture }}" alt="Profile" class="rounded-circle me-3"
+            style="width: 80px; height: 80px; object-fit: cover; border: 2px solid var(--az-orange);">
+        <div>
+            <h2 class="mb-1" style="font-size: 1.5rem; font-weight: 700;">{{ user.get_full_name|default:user.username }}
+            </h2>
+            <p class="text-muted mb-0" style="font-size: 0.9rem;">
+                <i class="fas fa-envelope me-1"></i> {{ user.email }}
+                {% if user.profile.phone_number %}
+                | <i class="fas fa-phone me-1 ms-2"></i> {{ user.profile.phone_number }}
+                {% endif %}
+            </p>
+            {% if user.profile.address %}
+            <p class="text-muted mb-0" style="font-size: 0.85rem; max-width: 500px;">
+                <i class="fas fa-map-marker-alt me-1"></i> {{ user.profile.address }}
+            </p>
+            {% endif %}
+        </div>
+        <div class="ms-auto">
+            <a href="{% url 'edit_profile' %}" class="btn btn-outline-secondary btn-sm">Edit Profile</a>
+        </div>
+    </div>
+
+    <h1 class="account-page-title">Your Account</h1>
+
+    <!-- ══════════════════════════════════════════
+         ROW 1 — BIG TILE CARDS
+    ══════════════════════════════════════════ -->
+    <div class="tile-grid">
+
+        <!-- Your Orders -->
+        <a href="{% url 'order_history' %}" class="tile-card" id="tile-orders">
+            <div class="tile-icon ic-amber">📦</div>
+            <div class="tile-text">
+                <h3>Your Orders</h3>
+                <p>Track, return, or buy things again</p>
+            </div>
+        </a>
+
+        <!-- Edit Profile -->
+        <a href="{% url 'edit_profile' %}" class="tile-card" id="tile-security">
+            <div class="tile-icon ic-blue">🔒</div>
+            <div class="tile-text">
+                <h3>Login &amp; Security</h3>
+                <p>Edit login, name, phone, and profile data</p>
+            </div>
+        </a>
+
+        <!-- Prime -->
+        <a href="#" class="tile-card" id="tile-prime">
+            <div class="tile-icon ic-indigo">✦</div>
+            <div class="tile-text">
+                <h3>Prime</h3>
+                <p>View benefits and payment settings</p>
+            </div>
+        </a>
+
+        <!-- Your Addresses -->
+        <a href="#" class="tile-card" id="tile-addresses">
+            <div class="tile-icon ic-orange">📍</div>
+            <div class="tile-text">
+                <h3>Your Addresses</h3>
+                <p>Edit addresses for orders and gifts</p>
+            </div>
+        </a>
+
+        <!-- Business Account -->
+        <a href="{% url 'become_seller' %}" class="tile-card" id="tile-business">
+            <div class="tile-icon ic-purple">🏢</div>
+            <div class="tile-text">
+                <h3>Your Business Account</h3>
+                <p>Sign up for free to save on bulk purchases with GST invoice &amp; bulk discounts</p>
+            </div>
+        </a>
+
+        <!-- Payment Options -->
+        <a href="#" class="tile-card" id="tile-payment">
+            <div class="tile-icon ic-teal">💳</div>
+            <div class="tile-text">
+                <h3>Payment Options</h3>
+                <p>Edit or add payment methods</p>
+            </div>
+        </a>
+
+        <!-- Anyzon Pay Balance -->
+        <a href="#" class="tile-card" id="tile-pay-balance">
+            <div class="tile-icon ic-amber">💰</div>
+            <div class="tile-text">
+                <h3>Anyzon Pay Balance</h3>
+                <p>Add money to your balance</p>
+            </div>
+        </a>
+
+        <!-- Contact Us -->
+        <a href="{% url 'contact' %}" class="tile-card" id="tile-contact">
+            <div class="tile-icon ic-green">🎧</div>
+            <div class="tile-text">
+                <h3>Contact Us</h3>
+                <p>Contact our customer service via phone or chat</p>
+            </div>
+        </a>
+
+        <!-- Wishlist -->
+        <a href="{% url 'wishlist' %}" class="tile-card" id="tile-wishlist">
+            <div class="tile-icon ic-red">❤️</div>
+            <div class="tile-text">
+                <h3>Your Wishlist</h3>
+                <p>Save items and create gift registries</p>
+            </div>
+        </a>
+
+    </div><!-- /tile-grid -->
+
+    <!-- ══════════════════════════════════════════
+         ROW 2 — LINK-LIST SECTIONS
+    ══════════════════════════════════════════ -->
+    <div class="section-divider">More account settings</div>
+
+    <div class="link-section-grid mb-5">
+
+        <!-- Digital Content & Devices -->
+        <div class="link-box">
+            <h4>Digital content and devices</h4>
+            <ul>
+                <li><a href="#">Apps and more</a></li>
+                <li><a href="#">Content Library</a></li>
+                <li><a href="#">Devices</a></li>
+                <li><a href="#">Digital gifts you've received</a></li>
+                <li><a href="#">Digital and device forum</a></li>
+            </ul>
+        </div>
+
+        <!-- Email Alerts -->
+        <div class="link-box">
+            <h4>Email alerts, messages, and ads</h4>
+            <ul>
+                <li><a href="#">Advertising preferences</a></li>
+                <li><a href="#">Communication preferences</a></li>
+                <li><a href="#">SMS alert preferences</a></li>
+                <li><a href="#">Message Centre</a></li>
+                <li><a href="#">Anyzon shopping notifications</a></li>
+            </ul>
+        </div>
+
+        <!-- More Ways to Pay -->
+        <div class="link-box">
+            <h4>More ways to pay</h4>
+            <ul>
+                <li><a href="#">Default Payment Settings</a></li>
+                <li><a href="#">Anyzon Pay</a></li>
+                <li><a href="#">Coupons</a></li>
+                <li><a href="#">Gift Cards</a></li>
+            </ul>
+        </div>
+
+        <!-- Ordering & Shopping Preferences -->
+        <div class="link-box">
+            <h4>Ordering and shopping preferences</h4>
+            <ul>
+                <li><a href="#">Leave packaging feedback</a></li>
+                <li><a href="#">Lists</a></li>
+                <li><a href="#">Manage saved IDs</a></li>
+                <li><a href="#">Your Shopping preferences</a></li>
+                <li><a href="#">Your Content</a></li>
+                <li><a href="#">Language settings</a></li>
+                <li><a href="#">Recalls and Product Safety Alerts</a></li>
+            </ul>
+        </div>
+
+        <!-- Other Accounts -->
+        <div class="link-box">
+            <h4>Other accounts</h4>
+            <ul>
+                <li><a href="#">Account Linking</a></li>
+                <li><a href="{% url 'become_seller' %}">Seller account</a></li>
+                <li><a href="#">Anyzon Web Services</a></li>
+            </ul>
+        </div>
+
+        <!-- Shopping Programs & Rentals -->
+        <div class="link-box">
+            <h4>Shopping programs and rentals</h4>
+            <ul>
+                <li><a href="#">Manage Your Anyzon Family</a></li>
+                <li><a href="#">Subscribe &amp; Save</a></li>
+                <li><a href="{% url 'style_zone' %}">Shop the Style Zone</a></li>
+                <li><a href="{% url 'deals' %}">Today's Deals</a></li>
+            </ul>
+        </div>
+
+        <!-- Subscriptions -->
+        <div class="link-box">
+            <h4>Subscriptions</h4>
+            <ul>
+                <li><a href="#">Email</a></li>
+                <li><a href="#">Memberships &amp; Subscriptions</a></li>
+            </ul>
+        </div>
+
+        <!-- Manage Your Data -->
+        <div class="link-box">
+            <h4>Manage your data</h4>
+            <ul>
+                <li><a href="#">Request your data</a></li>
+                <li><a href="#">Manage apps and services with data access</a></li>
+                <li><a href="#">Close Your Anyzon Account</a></li>
+                <li><a href="#">Privacy Notice</a></li>
+            </ul>
+        </div>
+
+        <!-- Your Activity -->
+        <div class="link-box">
+            <h4>Your activity &amp; history</h4>
+            <ul>
+                <li><a href="{% url 'order_history' %}">Order History</a></li>
+                <li><a href="{% url 'wishlist' %}">Saved Items</a></li>
+                <li><a href="#">Your Reviews</a></li>
+                <li><a href="{% url 'product_list' %}">Browsing History</a></li>
+            </ul>
+        </div>
+
+    </div><!-- /link-section-grid -->
+
+</div><!-- /container -->
+
+<script>
+    /* Subtle staggered entrance for tiles */
+    document.addEventListener('DOMContentLoaded', () => {
+        const items = document.querySelectorAll('.tile-card, .link-box');
+        items.forEach((el, i) => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(12px)';
+            el.style.transition = 'opacity .35s ease, transform .35s ease';
+            setTimeout(() => {
+                el.style.opacity = '1';
+                el.style.transform = 'translateY(0)';
+            }, 40 + i * 30);
+        });
+    });
+</script>
+{% endblock %}

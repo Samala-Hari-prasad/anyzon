@@ -1,0 +1,161 @@
+{% extends 'anyzon/base.html' %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-11">
+            <h1 class="fw-normal mb-4">Checkout</h1>
+
+            <div class="row g-4">
+                <div class="col-lg-8">
+                    <!-- Step 1: Address -->
+                    <div class="card border-0 shadow-sm mb-3">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 class="fw-bold d-flex">
+                                    <span class="me-3">1</span>
+                                    Delivery Address
+                                </h5>
+                                <a href="#" class="text-info text-decoration-none small">Change</a>
+                            </div>
+                            <div class="ms-4 ps-1">
+                                <p class="mb-0 small">
+                                    <strong>John Doe</strong><br>
+                                    123 Tech Park, Electronics City<br>
+                                    Bangalore, Karnataka, 560100<br>
+                                    Phone: 9876543210
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form action="{% url 'payment' %}" method="GET">
+                        <!-- Step 2: Payment -->
+                        <div class="card border-0 shadow-sm mb-3">
+                            <div class="card-body p-4">
+                                <h5 class="fw-bold d-flex mb-4">
+                                    <span class="me-3 text-danger">2</span>
+                                    Payment Method
+                                </h5>
+
+                                <div class="ms-4 ps-1">
+                                    <div class="border rounded p-3 mb-3 bg-light">
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="radio" name="method" id="payment1"
+                                                value="Card" checked>
+                                            <label class="form-check-label ms-2 fw-bold" for="payment1">
+                                                Credit or Debit Card
+                                                <div class="text-secondary small fw-normal mt-1">
+                                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/200px-Visa_Inc._logo.svg.png"
+                                                        height="15" class="me-1">
+                                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/200px-Mastercard-logo.svg.png"
+                                                        height="15" class="me-1">
+                                                    Supported cards: Visa, Mastercard, RuPay, and more.
+                                                </div>
+                                            </label>
+                                        </div>
+
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="radio" name="method" id="payment2"
+                                                value="UPI">
+                                            <label class="form-check-label ms-2 fw-bold" for="payment2">
+                                                Other UPI Apps
+                                                <div class="text-secondary small fw-normal mt-1">Google Pay, PhonePe,
+                                                    Paytm or Anyzon Pay UPI.</div>
+                                            </label>
+                                        </div>
+
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="method" id="payment3"
+                                                value="COD">
+                                            <label class="form-check-label ms-2 fw-bold" for="payment3">
+                                                Cash on Delivery / Pay on Delivery
+                                                <div class="text-secondary small fw-normal mt-1">Cash, UPI and Cards
+                                                    accepted at your doorstep.</div>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <button type="submit" class="btn py-1 px-4 mb-2"
+                                        style="background-color: #FFD814; border-radius: 20px; font-weight: 500; font-size: 14px;">Use
+                                        this payment method</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: Review -->
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body p-4">
+                                <h5 class="fw-bold d-flex mb-4">
+                                    <span class="me-3">3</span>
+                                    Review items and delivery
+                                </h5>
+
+                                <div class="ms-4 ps-1">
+                                    <div class="border rounded p-3 mb-3">
+                                        <div class="text-success small fw-bold mb-3"><i
+                                                class="fas fa-truck me-2"></i>Arriving Tomorrow</div>
+
+                                        {% for item in cart_items %}
+                                        <div class="d-flex mb-3 align-items-center">
+                                            <img src="{{ item.product.image_url }}" height="60" width="60"
+                                                style="object-fit: contain;" class="me-3 p-1 border">
+                                            <div class="flex-grow-1">
+                                                <div class="fw-bold small">{{ item.product.name }}</div>
+                                                <div class="text-danger small fw-bold">₹{{ item.product.price }}</div>
+                                                <div class="text-secondary small">Quantity: {{ item.quantity }}</div>
+                                                <div class="small">Sold by: Anyzon Retail</div>
+                                            </div>
+                                        </div>
+                                        {% if not forloop.last %}
+                                        <hr class="my-3 opacity-25">{% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="card border border-secondary-subtle p-3 sticky-top"
+                        style="top: 20px; border-radius: 8px;">
+                        <button class="btn w-100 py-2 mb-3 disabled"
+                            style="background-color: #f7ca00; border-radius: 20px; font-weight: 500; opacity: 0.6;">Place
+                            your order</button>
+                        <p class="extra-small text-center text-secondary mb-3">By placing your order, you agree to Any
+                            Zone's privacy notice and conditions of use.</p>
+
+                        <hr class="my-3">
+
+                        <h6 class="fw-bold mb-3">Order Summary</h6>
+                        <div class="d-flex justify-content-between small mb-1 text-secondary">
+                            <span>Items:</span>
+                            <span>₹{{ total|floatformat:2 }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between small mb-1 text-secondary">
+                            <span>Delivery:</span>
+                            <span>₹40.00</span>
+                        </div>
+                        <div class="d-flex justify-content-between small mb-3 text-secondary">
+                            <span>Cash on Delivery fee:</span>
+                            <span>₹0.00</span>
+                        </div>
+
+                        <hr class="my-3">
+
+                        <div class="d-flex justify-content-between fs-5 fw-bold text-danger mb-2">
+                            <span>Order Total:</span>
+                            <span>₹{{ total|add:40|floatformat:2 }}</span>
+                        </div>
+
+                        <div class="bg-light p-2 small border-top border-bottom mb-3" style="margin: 0 -1rem;">
+                            <a href="#" class="text-info text-decoration-none">How are delivery costs calculated?</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

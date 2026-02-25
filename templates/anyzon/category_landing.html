@@ -1,0 +1,317 @@
+{% extends 'anyzon/base.html' %}
+{% block extra_head %}
+<style>
+    /* ── Category Hero ───────────────────────────── */
+    .cl-hero {
+        position: relative;
+        overflow: hidden;
+        min-height: 300px;
+        display: flex;
+        align-items: center;
+    }
+
+    .cl-hero-bg {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        filter: brightness(.35);
+    }
+
+    .cl-hero-content {
+        position: relative;
+        z-index: 2;
+        padding: 60px 40px;
+        width: 100%;
+    }
+
+    .cl-hero-content .breadcrumb-item,
+    .cl-hero-content .breadcrumb-item a {
+        color: rgba(255, 255, 255, .65);
+    }
+
+    .cl-hero-content .breadcrumb-item.active {
+        color: #FFD814;
+    }
+
+    .cl-hero-content h1 {
+        font-size: clamp(1.8rem, 4vw, 3rem);
+        font-weight: 900;
+        color: #fff;
+    }
+
+    .cl-hero-content p {
+        color: rgba(255, 255, 255, .75);
+        font-size: 1rem;
+    }
+
+    .cl-btn {
+        background: linear-gradient(135deg, #FFD814, #FFA41C);
+        color: #0f1111;
+        font-weight: 800;
+        padding: 10px 28px;
+        border-radius: 30px;
+        text-decoration: none;
+        font-size: 14px;
+        display: inline-block;
+        box-shadow: 0 4px 16px rgba(255, 216, 20, .35);
+        transition: transform .2s, box-shadow .2s;
+    }
+
+    .cl-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(255, 216, 20, .5);
+        color: #0f1111;
+    }
+
+    /* ── Sub-category chips ─────────────────────── */
+    .sub-chip-bar {
+        background: white;
+        padding: 16px 0;
+        border-bottom: 1px solid #e4e4e4;
+    }
+
+    .sub-chip {
+        background: #f0f0f0;
+        border: 2px solid transparent;
+        border-radius: 30px;
+        padding: 6px 18px;
+        font-size: 13px;
+        font-weight: 600;
+        color: #0f1111;
+        text-decoration: none;
+        display: inline-block;
+        margin: 0 4px 4px;
+        cursor: pointer;
+        transition: all .2s;
+    }
+
+    .sub-chip:hover {
+        background: #febd69;
+        border-color: #f08804;
+        color: #0f1111;
+    }
+
+    /* ── Product cards ──────────────────────────── */
+    .cl-card {
+        background: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, .06);
+        height: 100%;
+        transition: transform .25s, box-shadow .25s;
+    }
+
+    .cl-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, .12);
+    }
+
+    .cl-card-img {
+        height: 200px;
+        background: #f8f8f8;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 14px;
+        position: relative;
+    }
+
+    .cl-card-img img {
+        max-height: 180px;
+        max-width: 100%;
+        object-fit: contain;
+    }
+
+    .cl-new-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: #0f1111;
+        color: #FFD814;
+        font-size: 10px;
+        font-weight: 700;
+        padding: 3px 8px;
+        border-radius: 4px;
+    }
+
+    .cl-card-body {
+        padding: 14px;
+    }
+
+    .cl-card-name {
+        font-size: 13px;
+        font-weight: 600;
+        color: #0f1111;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        min-height: 38px;
+        margin-bottom: 8px;
+    }
+
+    .cl-price {
+        font-size: 20px;
+        font-weight: 700;
+    }
+
+    .cl-price sup {
+        font-size: 11px;
+        vertical-align: super;
+    }
+
+    .cl-meta {
+        font-size: 12px;
+        color: #767676;
+    }
+
+    .btn-cl-cart {
+        background: #FFD814;
+        border: 1px solid #FCD200;
+        border-radius: 20px;
+        padding: 6px 0;
+        font-size: 12px;
+        font-weight: 700;
+        color: #0f1111;
+        text-decoration: none;
+        display: block;
+        text-align: center;
+        margin-top: 8px;
+    }
+
+    .btn-cl-cart:hover {
+        background: #f7ca00;
+        color: #0f1111;
+    }
+
+    .btn-cl-view {
+        border: 1px solid #0f1111;
+        border-radius: 20px;
+        padding: 6px 0;
+        font-size: 12px;
+        font-weight: 600;
+        color: #0f1111;
+        text-decoration: none;
+        display: block;
+        text-align: center;
+        margin-top: 5px;
+        transition: all .15s;
+    }
+
+    .btn-cl-view:hover {
+        background: #0f1111;
+        color: #FFD814;
+    }
+
+    /* ── Sort bar ───────────────────────────────── */
+    .sort-bar {
+        background: white;
+        border-bottom: 1px solid #e4e4e4;
+        padding: 10px 0;
+    }
+
+    .sort-bar .count {
+        font-size: 14px;
+        color: #555;
+    }
+
+    .empty-cat {
+        text-align: center;
+        padding: 80px 20px;
+    }
+
+    .empty-cat i {
+        font-size: 64px;
+        color: #ddd;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- Hero -->
+<div class="cl-hero">
+    <div class="cl-hero-bg" style="background-image:url('{{ config.hero_img }}');"></div>
+    <div class="cl-hero-content">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-3">
+                <li class="breadcrumb-item"><a href="{% url 'product_list' %}">Home</a></li>
+                <li class="breadcrumb-item active">{{ config.name }}</li>
+            </ol>
+        </nav>
+        <div class="d-flex align-items-center gap-3 mb-2">
+            <span style="font-size:3rem;">{{ config.emoji }}</span>
+            <h1 class="mb-0">{{ config.name }}</h1>
+        </div>
+        <p>{{ products|length }} products available · Fast delivery across India</p>
+        <a href="#products" class="cl-btn">Browse All {{ config.name }} →</a>
+    </div>
+</div>
+
+<!-- Sub-category chips -->
+{% if config.subs %}
+<div class="sub-chip-bar">
+    <div class="container-fluid px-4">
+        <a href="#" class="sub-chip" onclick="return false;">All {{ config.name }}</a>
+        {% for sub in config.subs %}
+        <a href="{% url 'product_list' %}?q={{ sub|urlencode }}" class="sub-chip">{{ sub }}</a>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+<!-- Sort bar -->
+<div class="sort-bar">
+    <div class="container-fluid px-4 d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <span class="count"><strong>{{ products|length }}</strong> results in <strong>{{ config.name }}</strong></span>
+        <div class="d-flex gap-2 align-items-center">
+            <span style="font-size:13px;color:#555;">Sort by:</span>
+            <a href="{% url 'category_landing' slug %}?sort=price" class="sub-chip"
+                style="padding:4px 12px;font-size:12px;">Price ↑</a>
+            <a href="{% url 'category_landing' slug %}" class="sub-chip"
+                style="padding:4px 12px;font-size:12px;">Relevance</a>
+        </div>
+    </div>
+</div>
+
+<!-- Products Grid -->
+<div class="container-fluid px-4 py-4 mb-5" id="products">
+    {% if products %}
+    <div class="row g-3">
+        {% for product in products %}
+        <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+            <div class="cl-card">
+                <div class="cl-card-img">
+                    <span class="cl-new-badge">{{ config.emoji }}</span>
+                    <img src="{{ product.image_url }}" alt="{{ product.name }}" loading="lazy"
+                        onerror="this.onerror=null;this.src='https://placehold.co/400x300/f8f8f8/aaa?text={{ config.name|urlencode }}'">
+                </div>
+                <div class="cl-card-body">
+                    <a href="{% url 'product_detail' product.slug %}" target="_blank"
+                        class="text-decoration-none text-dark">
+                        <div class="cl-card-name">{{ product.name }}</div>
+                    </a>
+                    <div class="cl-price"><sup>₹</sup>{{ product.price|floatformat:0 }}</div>
+                    <div class="cl-meta">
+                        ⭐ 4.5 &nbsp;|&nbsp; <span class="text-success fw-bold">In Stock</span>
+                    </div>
+                    <a href="{% url 'add_to_cart' product.id %}" class="btn-cl-cart">Add to Cart</a>
+                    <a href="{% url 'product_detail' product.slug %}" target="_blank" class="btn-cl-view">View
+                        Details</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-cat">
+        <i class="fas fa-box-open d-block mb-4"></i>
+        <h4 class="fw-bold">No products in {{ config.name }} yet</h4>
+        <p class="text-secondary mb-4">We're constantly adding new items. Check back soon!</p>
+        <a href="{% url 'product_list' %}" class="btn btn-warning rounded-pill px-5 fw-bold">Browse All Products →</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

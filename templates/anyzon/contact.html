@@ -1,0 +1,245 @@
+{% extends 'anyzon/base.html' %}
+
+{% block extra_head %}
+<style>
+    .contact-hero {
+        background: linear-gradient(135deg, #131921, #232f3e);
+        color: white;
+        padding: 60px 30px 50px;
+        text-align: center;
+    }
+
+    .contact-hero h1 {
+        font-size: 2.6rem;
+        font-weight: 800;
+    }
+
+    .contact-hero p {
+        color: #febd69;
+        font-size: 1.1rem;
+        max-width: 500px;
+        margin: 12px auto 0;
+    }
+
+    .contact-card {
+        background: white;
+        border-radius: 12px;
+        padding: 36px 32px;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, .1);
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+        border-color: #f08804;
+        box-shadow: 0 0 0 3px rgba(240, 136, 4, .15);
+    }
+
+    .btn-send {
+        background: linear-gradient(135deg, #f08804, #febd69);
+        border: none;
+        border-radius: 30px;
+        padding: 12px 0;
+        font-weight: 700;
+        font-size: 15px;
+        color: #0f1111;
+        width: 100%;
+        transition: opacity .2s;
+    }
+
+    .btn-send:hover {
+        opacity: .88;
+    }
+
+    .info-item {
+        display: flex;
+        gap: 14px;
+        align-items: flex-start;
+        margin-bottom: 22px;
+    }
+
+    .info-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #f08804, #febd69);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        color: white;
+        flex-shrink: 0;
+    }
+
+    .info-text strong {
+        display: block;
+        font-size: 15px;
+        font-weight: 700;
+    }
+
+    .info-text span {
+        font-size: 14px;
+        color: #555;
+    }
+
+    .social-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #f0f0f0;
+        border-radius: 8px;
+        padding: 10px 18px;
+        font-size: 14px;
+        font-weight: 600;
+        text-decoration: none;
+        color: #0f1111;
+        margin: 4px;
+        transition: background .2s;
+    }
+
+    .social-btn:hover {
+        background: #febd69;
+        color: #0f1111;
+    }
+
+    .social-btn.fb {
+        --c: #1877F2;
+    }
+
+    .social-btn.tw {
+        --c: #1DA1F2;
+    }
+
+    .social-btn.ig {
+        --c: #E1306C;
+    }
+
+    .social-btn i {
+        color: var(--c, #555);
+        font-size: 16px;
+    }
+
+    .success-box {
+        background: #d1e7dd;
+        border: 1px solid #a3cfbb;
+        border-radius: 10px;
+        padding: 24px;
+        text-align: center;
+    }
+
+    .success-box i {
+        font-size: 48px;
+        color: #198754;
+        margin-bottom: 12px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="contact-hero">
+    <h1>📬 Contact Us</h1>
+    <p>We're here to help! Reach out and we'll respond within 24 hours.</p>
+</div>
+
+<div class="py-5" style="background:#eaeded;">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Form -->
+            <div class="col-lg-7">
+                <div class="contact-card">
+                    <h3 class="fw-800 mb-1" style="font-weight:800;">Send us a Message</h3>
+                    <p class="text-secondary mb-4">Fill in the form and our support team will get back to you ASAP.</p>
+
+                    {% if submitted %}
+                    <div class="success-box">
+                        <i class="fas fa-check-circle d-block"></i>
+                        <h4 class="fw-bold">Message Sent!</h4>
+                        <p class="mb-0">Thank you for reaching out. We'll reply to your email within 24 hours.</p>
+                    </div>
+                    {% else %}
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-600">Your Name</label>
+                                <input type="text" class="form-control" placeholder="Aarav Sharma" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-600">Email Address</label>
+                                <input type="email" class="form-control" placeholder="aarav@email.com" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-600">Phone Number</label>
+                                <input type="tel" class="form-control" placeholder="+91 98765 43210">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-600">Topic</label>
+                                <select class="form-select">
+                                    <option>Order Issue</option>
+                                    <option>Return & Refund</option>
+                                    <option>Payment Problem</option>
+                                    <option>Product Query</option>
+                                    <option>Seller Support</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-600">Your Message</label>
+                                <textarea class="form-control" rows="5"
+                                    placeholder="Describe your issue or query in detail..." required></textarea>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn-send">Send Message ✉️</button>
+                            </div>
+                        </div>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Info -->
+            <div class="col-lg-5">
+                <div class="contact-card h-100">
+                    <h4 class="fw-800 mb-4" style="font-weight:800;">Get in Touch</h4>
+
+                    <div class="info-item">
+                        <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div class="info-text">
+                            <strong>Our Office</strong>
+                            <span>Anyzon Tower, Sector 62, Noida, Uttar Pradesh - 201301</span>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon"><i class="fas fa-phone-alt"></i></div>
+                        <div class="info-text">
+                            <strong>Customer Support</strong>
+                            <span>1800-123-4567 (Toll Free, 24/7)</span>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon"><i class="fas fa-envelope"></i></div>
+                        <div class="info-text">
+                            <strong>Email Us</strong>
+                            <span>support@anyzon</span>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon"><i class="fas fa-clock"></i></div>
+                        <div class="info-text">
+                            <strong>Working Hours</strong>
+                            <span>Monday – Sunday, 8:00 AM – 10:00 PM IST</span>
+                        </div>
+                    </div>
+
+                    <hr class="my-3">
+                    <h6 class="fw-bold mb-3">Follow Us</h6>
+                    <div>
+                        <a href="#" class="social-btn fb"><i class="fab fa-facebook"></i> Facebook</a>
+                        <a href="#" class="social-btn tw"><i class="fab fa-twitter"></i> Twitter</a>
+                        <a href="#" class="social-btn ig"><i class="fab fa-instagram"></i> Instagram</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,291 @@
+{% extends 'anyzon/base.html' %}
+{% block extra_head %}
+<style>
+    .sg-hero {
+        position: relative;
+        overflow: hidden;
+        min-height: 340px;
+        display: flex;
+        align-items: center;
+    }
+
+    .sg-hero-bg {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        filter: brightness(.45);
+        transition: transform 8s ease;
+    }
+
+    .sg-hero:hover .sg-hero-bg {
+        transform: scale(1.04);
+    }
+
+    .sg-hero-content {
+        position: relative;
+        z-index: 2;
+        padding: 60px 40px;
+    }
+
+    .sg-hero-content .breadcrumb-item,
+    .sg-hero-content .breadcrumb-item a {
+        color: rgba(255, 255, 255, .7);
+    }
+
+    .sg-hero-content .breadcrumb-item.active {
+        color: #FFD814;
+    }
+
+    .sg-hero-content h1 {
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        font-weight: 900;
+        color: #fff;
+        margin-bottom: 10px;
+    }
+
+    .sg-hero-content p {
+        color: rgba(255, 255, 255, .8);
+        font-size: 1.1rem;
+        margin-bottom: 24px;
+    }
+
+    .sg-btn-shop {
+        background: linear-gradient(135deg, #FFD814, #FFA41C);
+        color: #0f1111;
+        font-weight: 800;
+        padding: 12px 32px;
+        border-radius: 30px;
+        text-decoration: none;
+        font-size: 15px;
+        display: inline-block;
+        transition: transform .2s, box-shadow .2s;
+        box-shadow: 0 4px 20px rgba(255, 216, 20, .35);
+    }
+
+    .sg-btn-shop:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 28px rgba(255, 216, 20, .5);
+        color: #0f1111;
+    }
+
+    /* Filter pills */
+    .filter-pill {
+        background: white;
+        border: 2px solid #e4e4e4;
+        border-radius: 30px;
+        padding: 7px 18px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all .2s;
+        text-decoration: none;
+        color: #0f1111;
+        display: inline-block;
+        margin: 0 4px 8px;
+    }
+
+    .filter-pill:hover,
+    .filter-pill.active {
+        background: #0f1111;
+        color: #FFD814;
+        border-color: #0f1111;
+    }
+
+    /* Product cards */
+    .sg-card {
+        background: #fff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, .06);
+        height: 100%;
+        transition: transform .25s, box-shadow .25s;
+    }
+
+    .sg-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, .12);
+    }
+
+    .sg-card-img {
+        height: 220px;
+        background: #f8f8f8;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+        position: relative;
+    }
+
+    .sg-card-img img {
+        max-height: 200px;
+        max-width: 100%;
+        object-fit: contain;
+    }
+
+    .sg-badge {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: #cc0c39;
+        color: white;
+        font-size: 11px;
+        font-weight: 700;
+        padding: 3px 8px;
+        border-radius: 4px;
+    }
+
+    .sg-card-body {
+        padding: 14px;
+    }
+
+    .sg-card-name {
+        font-size: 14px;
+        font-weight: 600;
+        color: #0f1111;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        min-height: 40px;
+        margin-bottom: 8px;
+    }
+
+    .sg-price {
+        font-size: 22px;
+        font-weight: 700;
+    }
+
+    .sg-price sup {
+        font-size: 13px;
+        vertical-align: super;
+    }
+
+    .sg-old {
+        font-size: 12px;
+        color: #767676;
+    }
+
+    .sg-old s {
+        margin-right: 4px;
+    }
+
+    .btn-sg-cart {
+        background: #FFD814;
+        border: 1px solid #FCD200;
+        border-radius: 20px;
+        padding: 6px 0;
+        font-size: 13px;
+        font-weight: 600;
+        color: #0f1111;
+        text-decoration: none;
+        display: block;
+        text-align: center;
+        margin-top: 10px;
+        transition: background .15s;
+    }
+
+    .btn-sg-cart:hover {
+        background: #f7ca00;
+        color: #0f1111;
+    }
+
+    .btn-sg-detail {
+        border: 1px solid #0f1111;
+        border-radius: 20px;
+        padding: 6px 0;
+        font-size: 13px;
+        font-weight: 600;
+        color: #0f1111;
+        text-decoration: none;
+        display: block;
+        text-align: center;
+        margin-top: 6px;
+        transition: all .15s;
+    }
+
+    .btn-sg-detail:hover {
+        background: #0f1111;
+        color: #FFD814;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 80px 20px;
+        background: white;
+        border-radius: 12px;
+    }
+
+    .empty-state i {
+        font-size: 64px;
+        color: #ddd;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero -->
+<div class="sg-hero">
+    <div class="sg-hero-bg" style="background-image:url('{{ hero_img }}');"></div>
+    <div class="sg-hero-content w-100">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-3">
+                <li class="breadcrumb-item"><a href="{% url 'product_list' %}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'style_zone' %}">Style Zone</a></li>
+                <li class="breadcrumb-item active">{{ title }}</li>
+            </ol>
+        </nav>
+        <h1>{{ title }}</h1>
+        <p>{{ products|length }} exclusive items curated just for you.</p>
+        <a href="#products" class="sg-btn-shop">Shop Now →</a>
+        <!-- Switch gender -->
+        <div class="mt-3">
+            <a href="{% url 'style_gender' 'men' %}" class="filter-pill {% if gender == 'men' %}active{% endif %}">👔
+                Men</a>
+            <a href="{% url 'style_gender' 'women' %}"
+                class="filter-pill {% if gender == 'women' %}active{% endif %}">👗 Women</a>
+            <a href="{% url 'style_gender' 'kids' %}" class="filter-pill {% if gender == 'kids' %}active{% endif %}">🧒
+                Kids</a>
+        </div>
+    </div>
+</div>
+
+<!-- Products Grid -->
+<div class="container-fluid px-4 py-4 mb-5" id="products">
+    {% if products %}
+    <div class="row g-3">
+        {% for product in products %}
+        <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+            <div class="sg-card">
+                <div class="sg-card-img">
+                    <span class="sg-badge">Trending</span>
+                    <img src="{{ product.image_url }}" alt="{{ product.name }}" loading="lazy"
+                        onerror="this.onerror=null;this.src='https://placehold.co/400x300/f8f8f8/aaa?text=Fashion'">
+                </div>
+                <div class="sg-card-body">
+                    <a href="{% url 'product_detail' product.slug %}" target="_blank"
+                        class="text-decoration-none text-dark">
+                        <div class="sg-card-name">{{ product.name }}</div>
+                    </a>
+                    <div class="sg-price"><sup>₹</sup>{{ product.price|floatformat:0 }}</div>
+                    <div class="sg-old">M.R.P: <s>₹{{ product.price|add:300|floatformat:0 }}</s> <span
+                            class="text-success fw-bold">Save ₹300</span></div>
+                    <a href="{% url 'add_to_cart' product.id %}" class="btn-sg-cart">Add to Cart</a>
+                    <a href="{% url 'product_detail' product.slug %}" target="_blank" class="btn-sg-detail">View
+                        Details</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <i class="fas fa-tshirt d-block mb-3"></i>
+        <h4 class="fw-bold">No items in this section yet</h4>
+        <p class="text-secondary mb-4">We're adding new styles daily. Check back soon!</p>
+        <a href="{% url 'style_zone' %}" class="btn btn-warning rounded-pill px-5 fw-bold">← Back to Style Zone</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,122 @@
+{% extends 'anyzon/base.html' %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <!-- Breadcrumbs -->
+            <nav style="--bs-breadcrumb-divider: '›';" aria-label="breadcrumb">
+                <ol class="breadcrumb small">
+                    <li class="breadcrumb-item"><a href="#" class="text-info text-decoration-none">Your Account</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Your Orders</li>
+                </ol>
+            </nav>
+
+            <h1 class="fw-normal mb-4">Your Orders</h1>
+
+            <!-- Order Tabs -->
+            <div class="d-flex border-bottom mb-4">
+                <a href="#"
+                    class="nav-link text-dark border-bottom border-warning border-3 px-3 py-2 fw-bold">Orders</a>
+                <a href="#" class="nav-link text-secondary px-3 py-2">Buy Again</a>
+                <a href="#" class="nav-link text-secondary px-3 py-2">Local Store Orders</a>
+                <a href="#" class="nav-link text-secondary px-3 py-2">Cancelled Orders</a>
+            </div>
+
+            <div class="mb-4 d-flex align-items-center">
+                <span class="small me-3"><strong>{{ orders|length }} orders</strong> placed in</span>
+                <select class="form-select form-select-sm" style="width: auto; background-color: #f0f2f2;">
+                    <option>past 3 months</option>
+                    <option>2026</option>
+                    <option>2025</option>
+                </select>
+            </div>
+
+            {% if orders %}
+            {% for order in orders %}
+            <div class="card mb-4 border shadow-none" style="border-radius: 8px; overflow: hidden;">
+                <!-- Order Header -->
+                <div class="card-header border-bottom py-2 px-3" style="background-color: #f0f2f2;">
+                    <div class="row g-3 align-items-center">
+                        <div class="col-md-2 col-6">
+                            <div class="extra-small text-secondary text-uppercase">Order Placed</div>
+                            <div class="small">{{ order.created_at|date:"d F Y" }}</div>
+                        </div>
+                        <div class="col-md-1 col-6">
+                            <div class="extra-small text-secondary text-uppercase">Total</div>
+                            <div class="small">₹{{ order.total_paid }}</div>
+                        </div>
+                        <div class="col-md-2 d-none d-md-block">
+                            <div class="extra-small text-secondary text-uppercase">Ship To</div>
+                            <div class="small text-info cursor-pointer">{{ order.full_name }} <i
+                                    class="fas fa-chevron-down extra-small"></i></div>
+                        </div>
+                        <div class="col-md-7 text-md-end">
+                            <div class="extra-small text-secondary text-uppercase">Order # {{ order.id }}</div>
+                            <div class="small">
+                                <a href="#" class="text-info text-decoration-none me-2">Order Details</a>
+                                <span class="text-secondary">|</span>
+                                <a href="#" class="text-info text-decoration-none ms-2">Invoice <i
+                                        class="fas fa-chevron-down extra-small"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Body -->
+                <div class="card-body p-4">
+                    <h5 class="fs-5 fw-bold mb-3">
+                        {% if order.status == 'Pending' %}
+                        Preparing for Dispatch
+                        {% else %}
+                        {{ order.status }}
+                        {% endif %}
+                    </h5>
+
+                    {% for item in order.items.all %}
+                    <div class="row g-3 mb-4 last-child-mb-0">
+                        <div class="col-md-2 col-4">
+                            <a href="{% url 'product_detail' item.product.slug %}" target="_blank">
+                                <img src="{{ item.product.image_url }}" class="img-fluid border p-1"
+                                    style="max-height: 120px; width: 100%; object-fit: contain;">
+                            </a>
+                        </div>
+                        <div class="col-md-7 col-8">
+                            <a href="{% url 'product_detail' item.product.slug %}" target="_blank"
+                                class="text-info text-decoration-none fw-bold d-block mb-1">{{ item.product.name }}</a>
+                            <div class="extra-small text-secondary mb-2">Return window closed on {{
+                                order.created_at|date:"d M Y" }}</div>
+
+                            <div class="d-flex gap-2">
+                                <a href="{% url 'add_to_cart' item.product.id %}"
+                                    class="btn btn-az-action py-1 px-4">Buy it again</a>
+                                <a href="{% url 'product_detail' item.product.slug %}" target="_blank"
+                                    class="btn bg-white border border-secondary-subtle py-1 px-3 small">View your
+                                    item</a>
+                            </div>
+                        </div>
+                        <div class="col-md-3 d-grid gap-2">
+                            <button class="btn btn-light border py-1 small shadow-sm">Track package</button>
+                            <button class="btn btn-light border py-1 small shadow-sm">Return or replace items</button>
+                            <button class="btn btn-light border py-1 small shadow-sm">Share gift receipt</button>
+                            <button class="btn btn-light border py-1 small shadow-sm">Write a product review</button>
+                        </div>
+                    </div>
+                    {% if not forloop.last %}
+                    <hr class="my-4">{% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <div class="card p-5 text-center border-0 shadow-sm">
+                <i class="fas fa-box-open fs-1 text-secondary opacity-25 mb-4"></i>
+                <h3 class="fw-normal">Looks like you haven't placed any orders in the past 3 months.</h3>
+                <p class="text-secondary">Explore our wide selection of products and find something you love!</p>
+                <a href="{% url 'product_list' %}" class="btn btn-az-action px-5 py-2 mt-3">Continue Shopping</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

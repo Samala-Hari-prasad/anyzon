@@ -1,0 +1,638 @@
+{% extends 'anyzon/base.html' %}
+
+{% block extra_head %}
+<style>
+    .hero-carousel {
+        margin-bottom: -250px;
+    }
+
+    .hero-carousel img {
+        mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 70%, rgba(0, 0, 0, 0) 100%);
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 70%, rgba(0, 0, 0, 0) 100%);
+    }
+
+    .category-card {
+        background: white;
+        padding: 20px;
+        height: 100%;
+        border-radius: 0;
+        z-index: 10;
+        position: relative;
+    }
+
+    .category-card h3 {
+        font-size: 21px;
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+
+    .category-grid-item {
+        display: block;
+        text-decoration: none;
+        color: #0F1111;
+        margin-bottom: 15px;
+    }
+
+    .category-grid-item:hover {
+        color: #C7511F;
+    }
+
+    .category-grid-item img {
+        width: 100%;
+        height: 100px;
+        object-fit: contain;
+        background-color: #f8f8f8;
+        padding: 10px;
+        margin-bottom: 5px;
+    }
+
+    .category-grid-item span {
+        font-size: 13px;
+        display: block;
+    }
+
+    .see-more-link {
+        color: #007185;
+        text-decoration: none;
+        font-size: 13px;
+    }
+
+    .see-more-link:hover {
+        color: #C7511F;
+        text-decoration: underline;
+    }
+
+    .listing-section {
+        background: white;
+        padding: 20px;
+        margin-top: 20px;
+    }
+
+    .listing-section h2 {
+        font-size: 21px;
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+
+    .az-product-card {
+        border: none;
+        border-radius: 0;
+        padding: 10px;
+        height: 100%;
+        transition: transform 0.2s;
+    }
+
+    .az-product-card:hover {
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .az-product-img-container {
+        height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+        background: #f8f8f8;
+        margin-bottom: 15px;
+    }
+
+    .az-product-img-container img {
+        max-height: 100%;
+        max-width: 100%;
+        object-fit: contain;
+    }
+
+    .az-price {
+        font-size: 28px;
+        font-weight: 500;
+    }
+
+    .az-price-symbol {
+        font-size: 14px;
+        vertical-align: super;
+        margin-right: 2px;
+    }
+
+    .az-badge {
+        background-color: #CC0C39;
+        color: white;
+        padding: 4px 8px;
+        font-size: 12px;
+        font-weight: 700;
+        display: inline-block;
+        margin-bottom: 5px;
+    }
+
+    .btn-az-action {
+        background-color: #FFD814;
+        border-color: #FCD200;
+        color: #0F1111;
+        border-radius: 20px;
+        font-size: 13px;
+        padding: 5px 15px;
+        font-weight: 500;
+    }
+
+    .btn-az-action:hover {
+        background-color: #F7CA00;
+        border-color: #F2C200;
+    }
+
+    .product-title {
+        font-size: 16px;
+        color: #0F1111;
+        margin-bottom: 5px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        height: 40px;
+        line-height: 1.2;
+    }
+
+    .rating-stars {
+        color: #FFA41C;
+        font-size: 13px;
+        margin-bottom: 5px;
+    }
+
+    /* ── Style Zone Banger ──────────────────────────────────────────── */
+    .sz-banger {
+        background: linear-gradient(135deg, #1a0533 0%, #6a1b9a 45%, #ad1457 100%);
+        padding: 56px 40px;
+        position: relative;
+        overflow: hidden;
+        margin: 0;
+    }
+
+    .sz-banger::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: url('https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1400&q=40&auto=format&fit=crop') center/cover;
+        opacity: .12;
+    }
+
+    .sz-inner {
+        position: relative;
+        z-index: 2;
+    }
+
+    .sz-tag {
+        background: rgba(255, 216, 20, .2);
+        color: #FFD814;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        padding: 4px 12px;
+        border-radius: 20px;
+        border: 1px solid rgba(255, 216, 20, .4);
+        display: inline-block;
+        margin-bottom: 14px;
+        text-transform: uppercase;
+    }
+
+    .sz-title {
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        font-weight: 900;
+        color: #fff;
+        line-height: 1.1;
+        margin-bottom: 12px;
+    }
+
+    .sz-title span {
+        color: #FFD814;
+    }
+
+    .sz-subtitle {
+        color: rgba(255, 255, 255, .75);
+        font-size: 1.05rem;
+        margin-bottom: 28px;
+    }
+
+    .sz-btn-primary {
+        background: linear-gradient(135deg, #FFD814, #FFA41C);
+        color: #0f1111;
+        font-weight: 800;
+        font-size: 15px;
+        padding: 13px 32px;
+        border-radius: 30px;
+        text-decoration: none;
+        display: inline-block;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        transition: transform .2s, box-shadow .2s;
+        box-shadow: 0 4px 20px rgba(255, 216, 20, .4);
+    }
+
+    .sz-btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 28px rgba(255, 216, 20, .55);
+        color: #0f1111;
+    }
+
+    .sz-btn-ghost {
+        background: rgba(255, 255, 255, .12);
+        color: #fff;
+        font-weight: 700;
+        font-size: 14px;
+        padding: 11px 22px;
+        border-radius: 30px;
+        text-decoration: none;
+        display: inline-block;
+        margin-right: 8px;
+        margin-bottom: 10px;
+        border: 1px solid rgba(255, 255, 255, .35);
+        transition: background .2s, transform .2s;
+    }
+
+    .sz-btn-ghost:hover {
+        background: rgba(255, 255, 255, .25);
+        color: #fff;
+        transform: translateY(-2px);
+    }
+
+    .sz-gender-cards {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+    }
+
+    .sz-gender-card {
+        flex: 1;
+        min-width: 140px;
+        border-radius: 14px;
+        overflow: hidden;
+        position: relative;
+        text-decoration: none;
+        height: 180px;
+        transition: transform .25s;
+    }
+
+    .sz-gender-card:hover {
+        transform: translateY(-5px) scale(1.02);
+    }
+
+    .sz-gender-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: brightness(.65);
+        transition: filter .25s;
+    }
+
+    .sz-gender-card:hover img {
+        filter: brightness(.5);
+    }
+
+    .sz-gender-label {
+        position: absolute;
+        bottom: 14px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        color: #fff;
+        font-weight: 800;
+        font-size: 18px;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, .7);
+    }
+
+    .sz-gender-label small {
+        display: block;
+        font-size: 12px;
+        font-weight: 400;
+        opacity: .85;
+    }
+
+    /* ── Category strip ─────────────────────────────────────────────── */
+    .cat-strip {
+        background: #fff;
+        padding: 20px 0;
+        border-bottom: 1px solid #e4e4e4;
+    }
+
+    .cat-strip-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+        color: #0f1111;
+        transition: color .15s;
+        padding: 0 6px;
+        text-align: center;
+    }
+
+    .cat-strip-item:hover {
+        color: #C7511F;
+    }
+
+    .cat-strip-icon {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: #f0f0f0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        transition: background .2s;
+    }
+
+    .cat-strip-item:hover .cat-strip-icon {
+        background: #febd69;
+    }
+
+    .cat-strip-label {
+        font-size: 12px;
+        font-weight: 600;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="position-relative">
+    <!-- Hero Carousel -->
+    <div id="heroCarousel" class="carousel slide hero-carousel" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=1600&q=80&auto=format&fit=crop"
+                    class="d-block w-100" alt="Sale Banner - Electronics" style="height:500px; object-fit:cover;"
+                    onerror="this.src='https://placehold.co/1600x500/131921/febd69?text=Anyzon+Mega+Sale'">
+            </div>
+            <div class="carousel-item">
+                <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1600&q=80&auto=format&fit=crop"
+                    class="d-block w-100" alt="Banner - Fashion" style="height:500px; object-fit:cover;"
+                    onerror="this.src='https://placehold.co/1600x500/232f3e/febd69?text=Anyzon+Fashion'">
+            </div>
+            <div class="carousel-item">
+                <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1600&q=80&auto=format&fit=crop"
+                    class="d-block w-100" alt="Banner - Home" style="height:500px; object-fit:cover;"
+                    onerror="this.src='https://placehold.co/1600x500/37475a/febd69?text=Anyzon+Home'">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev"
+            style="height: 50%; top: 0;">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next"
+            style="height: 50%; top: 0;">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </button>
+    </div>
+
+    <!-- Category Grid Cards -->
+    <div class="container-fluid px-4" style="margin-bottom: 40px;">
+        <div class="row g-4">
+            <!-- Card 1: Home Appliances -->
+            <div class="col-xl-3 col-md-6">
+                <div class="category-card shadow-sm">
+                    <h3>Home Appliances</h3>
+                    <div class="row g-2">
+                        <div class="col-6">
+                            <a href="{% url 'product_list' %}?category=appliances" class="category-grid-item">
+                                <img src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=200&q=75&auto=format&fit=crop"
+                                    alt="AC" onerror="this.src='https://placehold.co/200x100/f8f8f8/999?text=AC'">
+                                <span>Air Conditioners</span>
+                            </a>
+                        </div>
+                        <div class="col-6">
+                            <a href="{% url 'product_list' %}?category=appliances" class="category-grid-item">
+                                <img src="https://images.unsplash.com/photo-1584568694244-14fbdf83bd30?w=200&q=75&auto=format&fit=crop"
+                                    alt="Fridges"
+                                    onerror="this.src='https://placehold.co/200x100/f8f8f8/999?text=Fridge'">
+                                <span>Refrigerators</span>
+                            </a>
+                        </div>
+                        <div class="col-6">
+                            <a href="{% url 'product_list' %}?category=appliances" class="category-grid-item">
+                                <img src="https://images.unsplash.com/photo-1574269909862-7e1d70bb8078?w=200&q=75&auto=format&fit=crop"
+                                    alt="Microwaves"
+                                    onerror="this.src='https://placehold.co/200x100/f8f8f8/999?text=Microwave'">
+                                <span>Microwaves</span>
+                            </a>
+                        </div>
+                        <div class="col-6">
+                            <a href="{% url 'product_list' %}?category=appliances" class="category-grid-item">
+                                <img src="https://images.unsplash.com/photo-1610557892470-55d9e80c0bce?w=200&q=75&auto=format&fit=crop"
+                                    alt="Washing"
+                                    onerror="this.src='https://placehold.co/200x100/f8f8f8/999?text=Washer'">
+                                <span>Washing Machines</span>
+                            </a>
+                        </div>
+                    </div>
+                    <a href="{% url 'product_list' %}?category=appliances" class="see-more-link">See all appliances</a>
+                </div>
+            </div>
+
+            <!-- Card 2: Fashion -->
+            <div class="col-xl-3 col-md-6">
+                <div class="category-card shadow-sm">
+                    <h3>Latest Fashion</h3>
+                    <div class="row g-2">
+                        <div class="col-6">
+                            <a href="{% url 'product_list' %}?category=fashion" class="category-grid-item">
+                                <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=200&q=75&auto=format&fit=crop"
+                                    alt="Clothing"
+                                    onerror="this.src='https://placehold.co/200x100/f8f8f8/999?text=Clothing'">
+                                <span>Clothing</span>
+                            </a>
+                        </div>
+                        <div class="col-6">
+                            <a href="{% url 'product_list' %}?category=fashion" class="category-grid-item">
+                                <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=200&q=75&auto=format&fit=crop"
+                                    alt="Shoes"
+                                    onerror="this.src='https://placehold.co/200x100/f8f8f8/999?text=Footwear'">
+                                <span>Footwear</span>
+                            </a>
+                        </div>
+                        <div class="col-6">
+                            <a href="{% url 'product_list' %}?category=fashion" class="category-grid-item">
+                                <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=200&q=75&auto=format&fit=crop"
+                                    alt="Watches"
+                                    onerror="this.src='https://placehold.co/200x100/f8f8f8/999?text=Watches'">
+                                <span>Watches</span>
+                            </a>
+                        </div>
+                        <div class="col-6">
+                            <a href="{% url 'product_list' %}?category=fashion" class="category-grid-item">
+                                <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=200&q=75&auto=format&fit=crop"
+                                    alt="Bags" onerror="this.src='https://placehold.co/200x100/f8f8f8/999?text=Bags'">
+                                <span>Bags</span>
+                            </a>
+                        </div>
+                    </div>
+                    <a href="{% url 'product_list' %}?category=fashion" class="see-more-link">See all fashion</a>
+                </div>
+            </div>
+
+            <!-- Card 3: Electronics -->
+            <div class="col-xl-3 col-md-6">
+                <div class="category-card shadow-sm">
+                    <h3>Up to 60% off | Mobiles</h3>
+                    <a href="{% url 'product_list' %}?category=electronics" class="category-grid-item h-100"
+                        style="margin-bottom: 0;">
+                        <img src="https://images.unsplash.com/photo-1695048292357-e9a4f25d9a1a?w=400&q=80&auto=format&fit=crop"
+                            style="height: 250px; object-fit: contain;" alt="iPhone 17 Pro Orange"
+                            onerror="this.src='https://placehold.co/400x250/f8f8f8/999?text=iPhone+17+Pro'">
+                        <span class="see-more-link mt-2">See all deals</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Card 4: Sign In -->
+            <div class="col-xl-3 col-md-6">
+                <div class="category-card shadow-sm">
+                    <div class="text-center py-4">
+                        <h3 class="mb-4">Sign in for your best experience</h3>
+                        <a href="#" class="btn btn-az-action w-100 py-2 mb-3">Sign in securely</a>
+                        <hr>
+                        <div class="mt-4">
+                            <p class="small mb-0">Treat your loved ones</p>
+                            <img src="https://images.unsplash.com/photo-1512909006721-3d6018887383?w=300&q=80&auto=format&fit=crop"
+                                class="img-fluid mt-2" alt="Gift"
+                                onerror="this.src='https://placehold.co/300x200/f8f8f8/999?text=Gifts'">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══ STYLE ZONE BANGER ══════════════════════════════════════════════ -->
+    <div class="sz-banger">
+        <div class="container-fluid px-4 sz-inner">
+            <div class="row align-items-center g-4">
+                <!-- Text side -->
+                <div class="col-lg-5">
+                    <span class="sz-tag">New Arrivals · Trending · Bestsellers</span>
+                    <h2 class="sz-title">Discover <span>Style Zone</span> ✨</h2>
+                    <p class="sz-subtitle">India's hottest fashion hub — curated looks for Men, Women &amp; Kids.</p>
+                    <div>
+                        <a href="{% url 'style_zone' %}" class="sz-btn-primary">✨ Explore Style Zone</a>
+                        <a href="{% url 'style_gender' 'men' %}" class="sz-btn-ghost">👔 Men</a>
+                        <a href="{% url 'style_gender' 'women' %}" class="sz-btn-ghost">👗 Women</a>
+                        <a href="{% url 'style_gender' 'kids' %}" class="sz-btn-ghost">🧒 Kids</a>
+                    </div>
+                </div>
+                <!-- Gender cards -->
+                <div class="col-lg-7">
+                    <div class="sz-gender-cards">
+                        <a href="{% url 'style_gender' 'men' %}" class="sz-gender-card">
+                            <img src="https://images.unsplash.com/photo-1617137968427-85924c800a22?w=400&q=80&auto=format&fit=crop"
+                                alt="Men's Fashion"
+                                onerror="this.src='https://placehold.co/400x180/1a0533/fff?text=Men'">
+                            <div class="sz-gender-label">Men <small>View Collection →</small></div>
+                        </a>
+                        <a href="{% url 'style_gender' 'women' %}" class="sz-gender-card">
+                            <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=400&q=80&auto=format&fit=crop"
+                                alt="Women's Fashion"
+                                onerror="this.src='https://placehold.co/400x180/6a1b9a/fff?text=Women'">
+                            <div class="sz-gender-label">Women <small>View Collection →</small></div>
+                        </a>
+                        <a href="{% url 'style_gender' 'kids' %}" class="sz-gender-card">
+                            <img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=400&q=80&auto=format&fit=crop"
+                                alt="Kids' Fashion"
+                                onerror="this.src='https://placehold.co/400x180/ad1457/fff?text=Kids'">
+                            <div class="sz-gender-label">Kids <small>View Collection →</small></div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══ CATEGORY STRIP ═══════════════════════════════════════════════════ -->
+    <div class="cat-strip">
+        <div class="container-fluid px-4">
+            <div class="d-flex gap-3 overflow-x-auto flex-nowrap pb-1" style="scrollbar-width:thin;">
+                <a href="{% url 'category_landing' 'mobiles' %}" class="cat-strip-item flex-shrink-0">
+                    <div class="cat-strip-icon">📱</div>
+                    <span class="cat-strip-label">Mobiles</span>
+                </a>
+                <a href="{% url 'category_landing' 'electronics' %}" class="cat-strip-item flex-shrink-0">
+                    <div class="cat-strip-icon">💻</div>
+                    <span class="cat-strip-label">Electronics</span>
+                </a>
+                <a href="{% url 'style_zone' %}" class="cat-strip-item flex-shrink-0">
+                    <div class="cat-strip-icon">👗</div>
+                    <span class="cat-strip-label">Fashion</span>
+                </a>
+                <a href="{% url 'category_landing' 'home-kitchen' %}" class="cat-strip-item flex-shrink-0">
+                    <div class="cat-strip-icon">🏠</div>
+                    <span class="cat-strip-label">Home &amp; Kitchen</span>
+                </a>
+                <a href="{% url 'category_landing' 'appliances' %}" class="cat-strip-item flex-shrink-0">
+                    <div class="cat-strip-icon">🔌</div>
+                    <span class="cat-strip-label">Appliances</span>
+                </a>
+                <a href="{% url 'category_landing' 'books' %}" class="cat-strip-item flex-shrink-0">
+                    <div class="cat-strip-icon">📚</div>
+                    <span class="cat-strip-label">Books</span>
+                </a>
+                <a href="{% url 'category_landing' 'sports-fitness' %}" class="cat-strip-item flex-shrink-0">
+                    <div class="cat-strip-icon">⚽</div>
+                    <span class="cat-strip-label">Sports</span>
+                </a>
+                <a href="{% url 'deals' %}" class="cat-strip-item flex-shrink-0">
+                    <div class="cat-strip-icon">🔥</div>
+                    <span class="cat-strip-label">Deals</span>
+                </a>
+                <a href="{% url 'category_landing' 'beauty-health' %}" class="cat-strip-item flex-shrink-0">
+                    <div class="cat-strip-icon">💄</div>
+                    <span class="cat-strip-label">Beauty</span>
+                </a>
+                <a href="{% url 'category_landing' 'toys-games' %}" class="cat-strip-item flex-shrink-0">
+                    <div class="cat-strip-icon">🧸</div>
+                    <span class="cat-strip-label">Toys</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Listing -->
+    <div class="container-fluid px-4 mb-5">
+        <div class="listing-section shadow-sm">
+            <h2>
+                {% if selected_category %} Results for {{ selected_category|title }}
+                {% elif search_query %} Search results for "{{ search_query }}"
+                {% else %} Trending Now {% endif %}
+            </h2>
+            <div class="row g-1">
+                {% if products %}
+                {% for product in products %}
+                <div class="col-xl-2 col-lg-3 col-md-4 col-6 mb-3">
+                    <div class="az-product-card border p-3">
+                        <a href="{% url 'product_detail' product.slug %}" target="_blank" class="text-decoration-none">
+                            <div class="az-product-img-container">
+                                <img src="{{ product.image_url }}" alt="{{ product.name }}" loading="lazy"
+                                    onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8f8f8/aaa?text={{ product.name|urlencode }}'">
+                            </div>
+                            <div class="az-badge">Save ₹{{ product.price|floatformat:0 }}</div>
+                            <h4 class="product-title">{{ product.name }}</h4>
+                            <div class="rating-stars">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                    class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                                <span class="text-secondary small ms-1">(2,456)</span>
+                            </div>
+                            <div class="az-price text-dark">
+                                <span class="az-price-symbol">₹</span>{{ product.price|floatformat:2 }}
+                            </div>
+                            <p class="small text-secondary mb-2">Get it by <strong>Tomorrow</strong></p>
+                        </a>
+                        <a href="{% url 'add_to_cart' product.id %}" class="btn btn-az-action w-100">Add to Cart</a>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <div class="col-12 text-center py-5">
+                    <h3>No products found in this zone.</h3>
+                    <a href="{% url 'product_list' %}" class="btn btn-az-action mt-3">Back to Store</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

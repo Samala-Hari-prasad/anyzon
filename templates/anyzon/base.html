@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anyzon | Your Ultimate Shopping Destination</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --az-dark: #131921;
+            --az-light-dark: #232f3e;
+            --az-yellow: #febd69;
+            --az-orange: #f08804;
+            --az-bg: #eaeded;
+            --az-link: #007185;
+            --az-text: #0F1111;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--az-bg);
+            color: var(--az-text);
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        /* Navbar Styling */
+        .navbar-az {
+            background-color: var(--az-dark);
+            padding: 8px 15px;
+            min-height: 60px;
+        }
+
+        .navbar-brand {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            line-height: 0.8;
+            font-weight: 800;
+            color: white !important;
+            font-size: 24px;
+            letter-spacing: -1px;
+            padding: 5px 10px;
+            border: 1px solid transparent;
+            position: relative;
+        }
+
+        .navbar-brand span {
+            color: white;
+        }
+
+        .navbar-brand::after {
+            content: "";
+            position: absolute;
+            bottom: 2px;
+            left: 12px;
+            width: 70%;
+            height: 8px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 20'%3E%3Cpath d='M5,5 Q50,25 95,5' fill='none' stroke='%23febd69' stroke-width='4' stroke-linecap='round'/%3E%3Cpath d='M90,2 L95,6 L90,10' fill='none' stroke='%23febd69' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+
+        .nav-link-az {
+            color: white !important;
+            font-size: 14px;
+            padding: 8px 10px;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid transparent;
+            border-radius: 2px;
+        }
+
+        .nav-link-az:hover {
+            border: 1px solid white;
+        }
+
+        .nav-label-small {
+            font-size: 12px;
+            color: #ccc;
+        }
+
+        .nav-label-bold {
+            font-weight: 700;
+        }
+
+        /* Search Bar */
+        .search-container {
+            flex-grow: 1;
+            max-width: 800px;
+            margin: 0 15px;
+            display: flex;
+            height: 40px;
+        }
+
+        .search-select {
+            background-color: #f3f3f3;
+            border-radius: 4px 0 0 4px;
+            border: none;
+            padding: 0 10px;
+            font-size: 12px;
+            width: auto;
+            max-width: 150px;
+            border-right: 1px solid #ddd;
+        }
+
+        .search-input {
+            flex-grow: 1;
+            border: none;
+            padding: 0 15px;
+            font-size: 15px;
+        }
+
+        .search-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px #ff9900 inset;
+        }
+
+        .search-btn {
+            background-color: var(--az-yellow);
+            border: none;
+            border-radius: 0 4px 4px 0;
+            width: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .search-btn:hover {
+            background-color: #f3a847;
+        }
+
+        /* Sub Navbar */
+        .sub-nav {
+            background-color: var(--az-light-dark);
+            padding: 5px 15px;
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .sub-nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            padding: 5px 10px;
+            border: 1px solid transparent;
+        }
+
+        .sub-nav a:hover {
+            border: 1px solid white;
+        }
+
+        /* Icons & Flags */
+        .loc-icon {
+            font-size: 18px;
+            margin-right: 5px;
+        }
+
+        /* Cart */
+        .cart-container {
+            display: flex;
+            align-items: flex-end;
+            position: relative;
+        }
+
+        .cart-count {
+            position: absolute;
+            left: 17px;
+            top: -2px;
+            color: var(--az-orange);
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .cart-icon {
+            font-size: 26px;
+        }
+
+        /* Footer */
+        .back-to-top {
+            background-color: #37475a;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .back-to-top:hover {
+            background-color: #485769;
+        }
+
+        footer {
+            background-color: var(--az-dark);
+            color: white;
+            padding: 40px 0;
+        }
+
+        .footer-links h6 {
+            font-weight: 700;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .search-container {
+                margin: 10px 0;
+                order: 3;
+                width: 100%;
+            }
+        }
+    </style>
+    {% block extra_head %}{% endblock %}
+</head>
+
+<body>
+    {% if not hide_nav %}
+    <header>
+        <nav class="navbar navbar-az navbar-expand-lg">
+            <div class="container-fluid px-2">
+                <!-- Brand -->
+                <a class="navbar-brand" href="{% url 'product_list' %}">
+                    anyzon
+                </a>
+
+                <!-- Delivery -->
+                <div class="d-none d-lg-block">
+                    <a href="#" class="nav-link-az ms-2">
+                        <span class="nav-label-small ms-4">Deliver to Noida</span>
+                        <span class="nav-label-bold"><i class="fas fa-map-marker-alt loc-icon"></i>Update
+                            location</span>
+                    </a>
+                </div>
+
+                <!-- Search -->
+                <form class="search-container mx-lg-3" action="{% url 'product_list' %}" method="GET">
+                    <select name="category" class="search-select d-none d-sm-block">
+                        <option value="">All Categories</option>
+                        {% for cat in categories %}
+                        <option value="{{ cat.slug }}">{{ cat.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <input type="text" name="q" class="search-input" placeholder="Search anyzon"
+                        value="{{ search_query|default:'' }}">
+                    <button class="search-btn" type="submit"><i class="fas fa-search"></i></button>
+                </form>
+
+                <!-- Tools -->
+                <div class="d-flex align-items-center">
+                    <a href="#" class="nav-link-az d-none d-md-flex me-2">
+                        <span class="nav-label-small">EN <i class="fas fa-caret-down fs-xs"></i></span>
+                        <span class="nav-label-bold"><img
+                                src="https://upload.wikimedia.org/wikipedia/en/thumb/4/41/Flag_of_India.svg/255px-Flag_of_India.svg.png"
+                                width="18" alt="IN"></span>
+                    </a>
+
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'user_profile' %}" class="nav-link-az me-2" id="nav-account">
+                        <span class="nav-label-small">Hello, {{ user.username }}</span>
+                        <span class="nav-label-bold">Account & Lists <i class="fas fa-caret-down"></i></span>
+                    </a>
+                    {% else %}
+                    <a href="{% url 'login' %}" class="nav-link-az me-2" id="nav-account">
+                        <span class="nav-label-small">Hello, sign in</span>
+                        <span class="nav-label-bold">Account & Lists <i class="fas fa-caret-down"></i></span>
+                    </a>
+                    {% endif %}
+
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'logout' %}" class="nav-link-az me-2">
+                        <span class="nav-label-small">Click here</span>
+                        <span class="nav-label-bold">Logout</span>
+                    </a>
+                    {% else %}
+                    <a href="{% url 'order_history' %}" class="nav-link-az me-2">
+                        <span class="nav-label-small">Returns</span>
+                        <span class="nav-label-bold">& Orders</span>
+                    </a>
+                    {% endif %}
+
+                    <a href="{% url 'cart_view' %}" class="nav-link-az">
+                        <div class="cart-container">
+                            <span class="cart-count">{{ cart_count|default:"0" }}</span>
+                            <i class="fas fa-shopping-cart cart-icon"></i>
+                            <span class="nav-label-bold align-self-end ms-1">Cart</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Sub Nav -->
+        <div class="sub-nav">
+            <a href="{% url 'product_list' %}"><i class="fas fa-bars me-1"></i> All</a>
+            <a href="{% url 'deals' %}">🔥 Today's Deals</a>
+            <a href="{% url 'product_list' %}?category=electronics">Mobiles</a>
+            <a href="{% url 'product_list' %}?category=electronics">Electronics</a>
+            <a href="{% url 'product_list' %}?category=fashion">Fashion</a>
+            <a href="{% url 'product_list' %}?category=home-kitchen">Home & Kitchen</a>
+            <a href="{% url 'product_list' %}?category=appliances">Appliances</a>
+            <a href="{% url 'product_list' %}?category=books">Books</a>
+            <a href="{% url 'product_list' %}?category=sports-fitness">Sports</a>
+            <a href="{% url 'wishlist' %}">❤️ Wishlist</a>
+            <a href="{% url 'become_seller' %}">Sell on Anyzon</a>
+            <a href="{% url 'about' %}">About Us</a>
+            <a href="{% url 'user_profile' %}">👤 Your Account</a>
+        </div>
+    </header>
+    {% endif %}
+
+    <main class="py-0">
+        {% block content %}{% endblock %}
+    </main>
+
+    {% if not hide_nav %}
+    <div class="back-to-top mt-5" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+        Back to top
+    </div>
+    {% endif %}
+
+    {% if not hide_nav %}
+    <footer>
+        <div class="container py-5">
+            <div class="row g-4 footer-links">
+                <div class="col-6 col-md-3">
+                    <h6>Get to Know Us</h6>
+                    <ul>
+                        <li><a href="#">About Anyzon</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press Releases</a></li>
+                        <li><a href="#">Anyzon Science</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md-3">
+                    <h6>Connect with Us</h6>
+                    <ul>
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">Instagram</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md-3">
+                    <h6>Make Money with Us</h6>
+                    <ul>
+                        <li><a href="#">Sell on Anyzon</a></li>
+                        <li><a href="#">Sell under Anyzon Accelerator</a></li>
+                        <li><a href="#">Protect and Build Your Brand</a></li>
+                        <li><a href="#">Anyzon Global Selling</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md-3">
+                    <h6>Let Us Help You</h6>
+                    <ul>
+                        <li><a href="#">COVID-19 and Anyzon</a></li>
+                        <li><a href="#">Your Account</a></li>
+                        <li><a href="#">Returns Centre</a></li>
+                        <li><a href="#">100% Purchase Protection</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="mt-5 border-secondary">
+            <div class="text-center pt-4">
+                <a class="navbar-brand d-inline-block mx-auto" href="#"
+                    style="width: fit-content; margin-bottom: 20px;">anyzon</a>
+                <p class="small text-secondary mt-3">© 2026, Anyzon, Inc. or its affiliates</p>
+            </div>
+        </div>
+    </footer>
+    {% endif %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

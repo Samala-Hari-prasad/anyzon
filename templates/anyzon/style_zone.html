@@ -1,0 +1,397 @@
+{% extends 'anyzon/base.html' %}
+{% block extra_head %}
+<style>
+    /* ── Hero ────────────────────────────────────────── */
+    .sz-hero {
+        background: linear-gradient(135deg, #1a0533 0%, #6a1b9a 45%, #ad1457 100%);
+        padding: 70px 0 50px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .sz-hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: url('https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1400&q=30&auto=format&fit=crop') center/cover;
+        opacity: .1;
+    }
+
+    .sz-hero h1 {
+        font-size: clamp(2.2rem, 5vw, 3.8rem);
+        font-weight: 900;
+        color: #fff;
+        position: relative;
+    }
+
+    .sz-hero h1 span {
+        color: #FFD814;
+    }
+
+    .sz-hero p {
+        color: rgba(255, 255, 255, .8);
+        font-size: 1.15rem;
+        position: relative;
+    }
+
+    /* ── Gender Hero Cards ───────────────────────────── */
+    .gender-hero-card {
+        position: relative;
+        border-radius: 16px;
+        overflow: hidden;
+        height: 320px;
+        text-decoration: none;
+        display: block;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, .2);
+        transition: transform .3s, box-shadow .3s;
+    }
+
+    .gender-hero-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 16px 48px rgba(0, 0, 0, .3);
+    }
+
+    .gender-hero-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform .4s;
+    }
+
+    .gender-hero-card:hover img {
+        transform: scale(1.06);
+    }
+
+    .gender-hero-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(0, 0, 0, .75) 0%, transparent 55%);
+    }
+
+    .gender-hero-info {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        right: 20px;
+        color: #fff;
+    }
+
+    .gender-hero-info h3 {
+        font-size: 1.8rem;
+        font-weight: 900;
+        margin: 0 0 4px;
+        color: #fff;
+    }
+
+    .gender-hero-info p {
+        font-size: 13px;
+        opacity: .85;
+        margin: 0 0 10px;
+    }
+
+    .gender-hero-btn {
+        background: linear-gradient(135deg, #FFD814, #FFA41C);
+        color: #0f1111;
+        font-weight: 700;
+        font-size: 13px;
+        padding: 8px 20px;
+        border-radius: 20px;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    /* ── Product mini-cards ───────────────────────────── */
+    .sz-mini-card {
+        background: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, .07);
+        transition: transform .2s, box-shadow .2s;
+        height: 100%;
+    }
+
+    .sz-mini-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, .13);
+    }
+
+    .sz-mini-img {
+        height: 160px;
+        background: #f8f8f8;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+    }
+
+    .sz-mini-img img {
+        max-height: 145px;
+        max-width: 100%;
+        object-fit: contain;
+    }
+
+    .sz-mini-body {
+        padding: 12px;
+    }
+
+    .sz-mini-name {
+        font-size: 13px;
+        font-weight: 600;
+        color: #0f1111;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 4px;
+    }
+
+    .sz-mini-price {
+        font-size: 17px;
+        font-weight: 700;
+        color: #0f1111;
+    }
+
+    .sz-mini-price sup {
+        font-size: 11px;
+        vertical-align: super;
+    }
+
+    .sz-section-hdr {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px 0 14px;
+    }
+
+    .sz-section-hdr h2 {
+        font-size: 1.5rem;
+        font-weight: 800;
+        margin: 0;
+    }
+
+    .sz-see-all {
+        color: #007185;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .sz-see-all:hover {
+        text-decoration: underline;
+        color: #C7511F;
+    }
+
+    .btn-add-sz {
+        background: #FFD814;
+        border: 1px solid #FCD200;
+        border-radius: 16px;
+        font-size: 12px;
+        font-weight: 600;
+        padding: 4px 12px;
+        color: #0f1111;
+        text-decoration: none;
+        display: block;
+        text-align: center;
+        margin-top: 8px;
+    }
+
+    .btn-add-sz:hover {
+        background: #f7ca00;
+        color: #0f1111;
+    }
+
+    /* ── Trending Banner ─────────────────────────────── */
+    .trending-band {
+        background: linear-gradient(90deg, #FFD814 0%, #FFA41C 100%);
+        padding: 22px 20px;
+        text-align: center;
+        border-radius: 10px;
+        margin: 30px 0;
+    }
+
+    .trending-band h3 {
+        font-size: 1.5rem;
+        font-weight: 900;
+        color: #0f1111;
+        margin: 0 0 4px;
+    }
+
+    .trending-band p {
+        font-size: 14px;
+        color: #333;
+        margin: 0 0 12px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- Hero -->
+<div class="sz-hero">
+    <div class="container-fluid px-4" style="position:relative;z-index:2;">
+        <span
+            style="background:rgba(255,216,20,.2);color:#FFD814;font-size:11px;font-weight:700;letter-spacing:2px;padding:4px 14px;border-radius:20px;border:1px solid rgba(255,216,20,.4);display:inline-block;margin-bottom:14px;">Anyzon
+            STYLE ZONE</span>
+        <h1>Welcome to <span>Style Zone</span> 👗</h1>
+        <p class="mt-2 mb-4">India's most exciting fashion destination — curated collections for the whole family.</p>
+        <a href="{% url 'style_gender' 'women' %}" class="gender-hero-btn me-2">Shop Women →</a>
+        <a href="{% url 'style_gender' 'men' %}" class="gender-hero-btn me-2"
+            style="background:rgba(255,255,255,.2);color:#fff;">Shop Men →</a>
+        <a href="{% url 'style_gender' 'kids' %}" class="gender-hero-btn"
+            style="background:rgba(255,255,255,.2);color:#fff;">Shop Kids →</a>
+    </div>
+</div>
+
+<!-- Gender Hero Cards -->
+<div class="container-fluid px-4 py-4">
+    <div class="row g-3">
+        <div class="col-md-4">
+            <a href="{% url 'style_gender' 'men' %}" class="gender-hero-card">
+                <img src="https://images.unsplash.com/photo-1617137968427-85924c800a22?w=600&q=80&auto=format&fit=crop"
+                    alt="Men's Fashion" onerror="this.src='https://placehold.co/600x320/1a0533/FFD814?text=Men'">
+                <div class="gender-hero-overlay"></div>
+                <div class="gender-hero-info">
+                    <h3>👔 Men</h3>
+                    <p>{{ men_products|length }}+ items — Shirts, Jeans, Shoes & more</p>
+                    <span class="gender-hero-btn">Shop Men's Collection →</span>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a href="{% url 'style_gender' 'women' %}" class="gender-hero-card">
+                <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&q=80&auto=format&fit=crop"
+                    alt="Women's Fashion" onerror="this.src='https://placehold.co/600x320/6a1b9a/FFD814?text=Women'">
+                <div class="gender-hero-overlay"></div>
+                <div class="gender-hero-info">
+                    <h3>👗 Women</h3>
+                    <p>{{ women_products|length }}+ items — Kurtas, Sarees, Dresses & more</p>
+                    <span class="gender-hero-btn">Shop Women's Collection →</span>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a href="{% url 'style_gender' 'kids' %}" class="gender-hero-card">
+                <img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=600&q=80&auto=format&fit=crop"
+                    alt="Kids' Fashion" onerror="this.src='https://placehold.co/600x320/ad1457/FFD814?text=Kids'">
+                <div class="gender-hero-overlay"></div>
+                <div class="gender-hero-info">
+                    <h3>🧒 Kids</h3>
+                    <p>{{ kids_products|length }}+ items — T-shirts, Dresses, Shoes & more</p>
+                    <span class="gender-hero-btn">Shop Kids' Collection →</span>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Trending Band -->
+<div class="container-fluid px-4">
+    <div class="trending-band">
+        <h3>🔥 Trending Fashion This Week</h3>
+        <p>Handpicked by our style experts — updated every Monday.</p>
+        <a href="{% url 'deals' %}" class="gender-hero-btn">View All Deals →</a>
+    </div>
+</div>
+
+<!-- Men's Picks -->
+<div class="container-fluid px-4 mb-3">
+    <div class="sz-section-hdr">
+        <h2>👔 Men's Top Picks</h2>
+        <a href="{% url 'style_gender' 'men' %}" class="sz-see-all">See all men's wear →</a>
+    </div>
+    <div class="row g-3">
+        {% for product in men_products %}
+        <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+            <div class="sz-mini-card">
+                <a href="{% url 'product_detail' product.slug %}" target="_blank" class="text-decoration-none">
+                    <div class="sz-mini-img">
+                        <img src="{{ product.image_url }}" alt="{{ product.name }}" loading="lazy"
+                            onerror="this.onerror=null;this.src='https://placehold.co/300x200/f8f8f8/aaa?text=Fashion'">
+                    </div>
+                    <div class="sz-mini-body">
+                        <div class="sz-mini-name">{{ product.name }}</div>
+                        <div class="sz-mini-price"><sup>₹</sup>{{ product.price|floatformat:0 }}</div>
+                    </div>
+                </a>
+                <div class="px-2 pb-2">
+                    <a href="{% url 'add_to_cart' product.id %}" class="btn-add-sz">Add to Cart</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <p class="text-muted text-center py-3">No men's products yet. <a href="{% url 'product_list' %}">Browse
+                    all</a></p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Women's Picks -->
+<div class="container-fluid px-4 mb-3" style="background:white;padding-top:10px;padding-bottom:10px;">
+    <div class="sz-section-hdr">
+        <h2>👗 Women's Top Picks</h2>
+        <a href="{% url 'style_gender' 'women' %}" class="sz-see-all">See all women's wear →</a>
+    </div>
+    <div class="row g-3">
+        {% for product in women_products %}
+        <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+            <div class="sz-mini-card">
+                <a href="{% url 'product_detail' product.slug %}" target="_blank" class="text-decoration-none">
+                    <div class="sz-mini-img">
+                        <img src="{{ product.image_url }}" alt="{{ product.name }}" loading="lazy"
+                            onerror="this.onerror=null;this.src='https://placehold.co/300x200/f8f8f8/aaa?text=Fashion'">
+                    </div>
+                    <div class="sz-mini-body">
+                        <div class="sz-mini-name">{{ product.name }}</div>
+                        <div class="sz-mini-price"><sup>₹</sup>{{ product.price|floatformat:0 }}</div>
+                    </div>
+                </a>
+                <div class="px-2 pb-2">
+                    <a href="{% url 'add_to_cart' product.id %}" class="btn-add-sz">Add to Cart</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <p class="text-muted text-center py-3">No women's products yet. <a href="{% url 'product_list' %}">Browse
+                    all</a></p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Kids' Picks -->
+<div class="container-fluid px-4 mb-5">
+    <div class="sz-section-hdr">
+        <h2>🧒 Kids' Top Picks</h2>
+        <a href="{% url 'style_gender' 'kids' %}" class="sz-see-all">See all kids' wear →</a>
+    </div>
+    <div class="row g-3">
+        {% for product in kids_products %}
+        <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+            <div class="sz-mini-card">
+                <a href="{% url 'product_detail' product.slug %}" target="_blank" class="text-decoration-none">
+                    <div class="sz-mini-img">
+                        <img src="{{ product.image_url }}" alt="{{ product.name }}" loading="lazy"
+                            onerror="this.onerror=null;this.src='https://placehold.co/300x200/f8f8f8/aaa?text=Kids'">
+                    </div>
+                    <div class="sz-mini-body">
+                        <div class="sz-mini-name">{{ product.name }}</div>
+                        <div class="sz-mini-price"><sup>₹</sup>{{ product.price|floatformat:0 }}</div>
+                    </div>
+                </a>
+                <div class="px-2 pb-2">
+                    <a href="{% url 'add_to_cart' product.id %}" class="btn-add-sz">Add to Cart</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <p class="text-muted text-center py-3">No kids' products yet. <a href="{% url 'product_list' %}">Browse
+                    all</a></p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

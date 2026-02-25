@@ -1,0 +1,202 @@
+{% extends 'anyzon/base.html' %}
+{% load static %}
+
+{% block extra_head %}
+<style>
+    .auth-bg {
+        background-color: white;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 20px;
+    }
+
+    .auth-logo {
+        font-size: 32px;
+        font-weight: 800;
+        color: var(--az-dark);
+        text-decoration: none;
+        margin-bottom: 20px;
+    }
+
+    .auth-logo span {
+        color: var(--az-orange);
+    }
+
+    .auth-card {
+        width: 100%;
+        max-width: 350px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 20px 26px;
+        background: white;
+    }
+
+    .auth-card h1 {
+        font-size: 28px;
+        font-weight: 400;
+        margin-bottom: 20px;
+    }
+
+    .auth-card label {
+        font-weight: 700;
+        font-size: 13px;
+        margin-bottom: 5px;
+        display: block;
+    }
+
+    .auth-card input {
+        width: 100%;
+        padding: 7px 10px;
+        border: 1px solid #a6a6a6;
+        border-radius: 3px;
+        margin-bottom: 15px;
+        font-size: 13px;
+    }
+
+    .auth-card input:focus {
+        outline: none;
+        border-color: #e77600;
+        box-shadow: 0 0 3px 2px rgba(228, 121, 17, .5);
+    }
+
+    .btn-az-auth {
+        background: linear-gradient(to bottom, #f7dfa5, #f0c14b);
+        border: 1px solid #a88734;
+        border-radius: 3px;
+        color: #111;
+        width: 100%;
+        padding: 6px;
+        font-size: 13px;
+        margin-top: 10px;
+        margin-bottom: 15px;
+    }
+
+    .btn-az-auth:hover {
+        background: linear-gradient(to bottom, #f5d78e, #eeb933);
+        border-color: #9c7e31;
+    }
+
+    .auth-terms {
+        font-size: 12px;
+        color: #555;
+        margin-bottom: 20px;
+        line-height: 1.5;
+    }
+
+    .auth-terms a {
+        color: #0066c0;
+        text-decoration: none;
+    }
+
+    .auth-terms a:hover {
+        color: #c45500;
+        text-decoration: underline;
+    }
+
+    .auth-divider {
+        position: relative;
+        text-align: center;
+        margin: 20px 0;
+    }
+
+    .auth-divider::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: #e7e7e7;
+    }
+
+    .auth-divider span {
+        position: relative;
+        background: white;
+        padding: 0 10px;
+        font-size: 12px;
+        color: #767676;
+    }
+
+    .messages {
+        width: 100%;
+        max-width: 350px;
+        margin-bottom: 15px;
+    }
+
+    /* Form help text and errors */
+    .helptext {
+        display: block;
+        font-size: 11px;
+        color: #555;
+        margin-bottom: 10px;
+        margin-top: -10px;
+    }
+
+    .errorlist {
+        color: #c40000;
+        font-size: 12px;
+        list-style: none;
+        padding-left: 0;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="auth-bg">
+    <a href="{% url 'product_list' %}" class="auth-logo">Any<span>Zone</span></a>
+
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show"
+            role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="auth-card">
+        <h1>Create account</h1>
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {% if field.help_text %}
+            <span class="helptext">{{ field.help_text|safe }}</span>
+            {% endif %}
+            {% if field.errors %}
+            {{ field.errors }}
+            {% endif %}
+            {% endfor %}
+
+            <button type="submit" class="btn-az-auth">Continue</button>
+        </form>
+
+        <p class="auth-terms">
+            By creating an account, you agree to Anyzon's <a href="#">Conditions of Use</a> and <a href="#">Privacy
+                Notice</a>.
+        </p>
+
+        <div class="auth-divider"></div>
+
+        <p style="font-size: 13px;">
+            Already have an account? <a href="{% url 'login' %}" style="color: #0066c0; text-decoration: none;">Sign in
+                <i class="fas fa-caret-right" style="font-size: 10px;"></i></a>
+        </p>
+    </div>
+
+    <footer class="mt-5 text-center" style="background: none; color: #555; padding: 20px 0;">
+        <div class="mb-2" style="font-size: 11px;">
+            <a href="#" class="mx-2 text-decoration-none" style="color: #0066c0;">Conditions of Use</a>
+            <a href="#" class="mx-2 text-decoration-none" style="color: #0066c0;">Privacy Notice</a>
+            <a href="#" class="mx-2 text-decoration-none" style="color: #0066c0;">Help</a>
+        </div>
+        <p style="font-size: 11px;">© 2021-2026, anyzon, Inc. or its affiliates</p>
+    </footer>
+</div>
+{% endblock %}
