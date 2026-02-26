@@ -1,0 +1,134 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en-in">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Creative Community Hub | Bharat{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    {% block extra_css %}{% endblock %}
+    <!-- Apply saved theme BEFORE render to avoid flash -->
+    <script>
+        (function () {
+            if (localStorage.getItem('ch-theme') === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        })();
+    </script>
+</head>
+
+<body>
+    <nav>
+        <a href="{% url 'dashboard' %}" class="logo">
+            <span style="font-family: 'Playfair Display', serif; font-style: italic;">Creative</span>Hub.<span>in</span>
+        </a>
+
+        <div style="display: flex; gap: 1.5rem; align-items: center;">
+            <a href="{% url 'portfolio_showcase:index' %}"
+                style="text-decoration: none; color: var(--text-dark); font-weight: 600; font-size: 0.95rem;">Showcase</a>
+            <a href="{% url 'forum_board:index' %}"
+                style="text-decoration: none; color: var(--text-dark); font-weight: 600; font-size: 0.95rem;">Community</a>
+
+            <!-- 🌙 / ☀️ Theme Toggle -->
+            <button id="theme-toggle" title="Toggle dark / light mode">🌙 Dark</button>
+
+            {% if user.is_authenticated %}
+            <span style="font-weight: 600; font-size: 0.9rem; color: var(--text-gray);">Hi, {{ user.username }}</span>
+            <a href="/admin/" class="btn btn-primary">Admin</a>
+            {% else %}
+            <a href="/admin/login/" class="btn btn-primary">Sign In</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <div style="min-height: 80vh;">
+        {% block content %}{% endblock %}
+    </div>
+
+    <footer
+        style="padding: 6rem 5% 3rem; background: var(--footer-bg); border-top: 1px solid var(--glass-border); margin-top: 10rem;">
+        <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; flex-wrap: wrap;">
+            <div>
+                <a href="{% url 'dashboard' %}" class="logo"
+                    style="margin-bottom: 1.5rem; display: block;">CreativeHub.<span>in</span></a>
+                <p style="color: var(--text-gray); line-height: 1.8;">Asia's fastest growing community for creative
+                    professionals. Built with ❤️ in India for the global creator economy.</p>
+            </div>
+            <div>
+                <h4 style="margin-bottom: 1.5rem;">Explore</h4>
+                <ul style="list-style: none; line-height: 2.2;">
+                    <li><a href="{% url 'blog_engine:index' %}"
+                            style="text-decoration:none; color: var(--text-gray);">Stories</a></li>
+                    <li><a href="{% url 'photo_gallery:index' %}"
+                            style="text-decoration:none; color: var(--text-gray);">Galleries</a></li>
+                    <li><a href="{% url 'job_board:index' %}"
+                            style="text-decoration:none; color: var(--text-gray);">Jobs</a></li>
+                    <li><a href="{% url 'marketplace:index' %}"
+                            style="text-decoration:none; color: var(--text-gray);">Marketplace</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="margin-bottom: 1.5rem;">Apps</h4>
+                <ul style="list-style: none; line-height: 2.2;">
+                    <li><a href="{% url 'quiz_master:index' %}"
+                            style="text-decoration:none; color: var(--text-gray);">Quiz Master</a></li>
+                    <li><a href="{% url 'poll_maker:index' %}"
+                            style="text-decoration:none; color: var(--text-gray);">Polls</a></li>
+                    <li><a href="{% url 'news_feed:index' %}"
+                            style="text-decoration:none; color: var(--text-gray);">News Feed</a></li>
+                    <li><a href="{% url 'weather_app:index' %}"
+                            style="text-decoration:none; color: var(--text-gray);">Weather</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="margin-bottom: 1.5rem;">Community</h4>
+                <ul style="list-style: none; line-height: 2.2;">
+                    <li><a href="{% url 'chat_room:index' %}"
+                            style="text-decoration:none; color: var(--text-gray);">Chat Room</a></li>
+                    <li><a href="{% url 'forum_board:index' %}"
+                            style="text-decoration:none; color: var(--text-gray);">Forum</a></li>
+                    <li><a href="{% url 'newsletter_sub:index' %}"
+                            style="text-decoration:none; color: var(--text-gray);">Newsletter</a></li>
+                    <li><a href="{% url 'event_planner:index' %}"
+                            style="text-decoration:none; color: var(--text-gray);">Events</a></li>
+                </ul>
+            </div>
+        </div>
+        <div
+            style="text-align: center; margin-top: 5rem; padding-top: 2rem; border-top: 1px solid var(--dashed-border); color: var(--text-gray); font-size: 0.85rem;">
+            &copy; 2026 Creative Community Hub (India) Pvt Ltd. All rights reserved.
+        </div>
+    </footer>
+
+    {% block extra_js %}{% endblock %}
+
+    <script>
+        (function () {
+            const html = document.documentElement;
+            const btn = document.getElementById('theme-toggle');
+
+            function applyTheme(theme) {
+                if (theme === 'dark') {
+                    html.setAttribute('data-theme', 'dark');
+                    btn.textContent = '☀️ Light';
+                } else {
+                    html.removeAttribute('data-theme');
+                    btn.textContent = '🌙 Dark';
+                }
+                localStorage.setItem('ch-theme', theme);
+            }
+
+            // Sync button label with current theme on load
+            const saved = localStorage.getItem('ch-theme') || 'light';
+            applyTheme(saved);
+
+            btn.addEventListener('click', function () {
+                const isDark = html.getAttribute('data-theme') === 'dark';
+                applyTheme(isDark ? 'light' : 'dark');
+            });
+        })();
+    </script>
+</body>
+
+</html>

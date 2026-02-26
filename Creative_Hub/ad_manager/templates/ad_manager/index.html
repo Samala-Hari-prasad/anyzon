@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block title %}Ad Manager | Creative Hub{% endblock %}
+{% block content %}
+<div class="animate-in" style="padding:6rem 5%;">
+    <div
+        style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:5rem; flex-wrap:wrap; gap:2rem;">
+        <div>
+            <h2 style="font-family:'Playfair Display',serif; font-size:3.5rem; margin-bottom:0.5rem;">Ad <span
+                    style="color:var(--primary)">Manager</span></h2>
+            <p style="color:var(--text-gray);">Community promotions and campaign performance.</p>
+        </div>
+        <div style="display:flex; gap:2rem;">
+            <div class="creative-card" style="text-align:center; padding:1.5rem 2.5rem;">
+                <div style="font-size:1.8rem; font-weight:800;">{{ total_impressions|default:0 }}</div>
+                <div
+                    style="font-size:0.8rem; color:var(--text-gray); text-transform:uppercase; font-weight:700; letter-spacing:1px; margin-top:0.25rem;">
+                    Impressions</div>
+            </div>
+            <div class="creative-card" style="text-align:center; padding:1.5rem 2.5rem;">
+                <div style="font-size:1.8rem; font-weight:800; color:var(--primary);">{{ total_clicks|default:0 }}</div>
+                <div
+                    style="font-size:0.8rem; color:var(--text-gray); text-transform:uppercase; font-weight:700; letter-spacing:1px; margin-top:0.25rem;">
+                    Clicks</div>
+            </div>
+        </div>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(350px,1fr)); gap:2.5rem;">
+        {% for campaign in campaigns %}
+        <div class="creative-card">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:2rem;">
+                <div>
+                    <span
+                        style="font-size:0.7rem; font-weight:800; color:var(--primary); text-transform:uppercase; letter-spacing:2px;">{{
+                        campaign.get_ad_type_display }}</span>
+                    <h3 style="font-size:1.4rem; margin-top:0.5rem;">{{ campaign.title }}</h3>
+                    <p style="color:var(--text-gray); font-size:0.9rem;">{{ campaign.client }}</p>
+                </div>
+                <span
+                    style="background:#ecfdf5; color:#10b981; font-size:0.7rem; font-weight:800; padding:0.3rem 0.8rem; border-radius:99px;">LIVE</span>
+            </div>
+            <div
+                style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1rem; padding:1.5rem; background:#f8fafc; border-radius:1rem; text-align:center;">
+                <div>
+                    <div style="font-weight:800; font-size:1.2rem;">{{ campaign.impressions }}</div>
+                    <div style="color:var(--text-gray); font-size:0.75rem;">Views</div>
+                </div>
+                <div>
+                    <div style="font-weight:800; font-size:1.2rem; color:var(--primary);">{{ campaign.clicks }}</div>
+                    <div style="color:var(--text-gray); font-size:0.75rem;">Clicks</div>
+                </div>
+                <div>
+                    <div style="font-weight:800; font-size:1.2rem; color:#10b981;">{{ campaign.ctr }}%</div>
+                    <div style="color:var(--text-gray); font-size:0.75rem;">CTR</div>
+                </div>
+            </div>
+            <div
+                style="margin-top:1.5rem; display:flex; justify-content:space-between; color:var(--text-gray); font-size:0.85rem;">
+                <span>Budget: <strong>₹{{ campaign.budget }}</strong></span>
+                <span>Ends: {{ campaign.end_date|date:"d M" }}</span>
+            </div>
+        </div>
+        {% empty %}
+        <div style="grid-column:1/-1; text-align:center; padding:8rem 0; color:var(--text-gray);">
+            <div style="font-size:4rem; margin-bottom:1.5rem;">📢</div>
+            <h3>No active campaigns. Launch your first ad!</h3>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

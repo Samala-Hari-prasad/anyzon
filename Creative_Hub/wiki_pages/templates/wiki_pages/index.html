@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Wiki | Creative Hub{% endblock %}
+{% block content %}
+<div class="animate-in" style="padding:6rem 5%; max-width:1000px; margin:0 auto;">
+    <div style="margin-bottom:4rem;">
+        <h2 style="font-family:'Playfair Display',serif; font-size:3.5rem; margin-bottom:2rem;">Community <span
+                style="color:var(--primary)">Wiki</span></h2>
+        <form method="GET" style="display:flex; gap:1rem;">
+            <div class="input-wrapper"
+                style="flex:1; display:flex; background:#f8fafc; border:1px solid #e2e8f0; border-radius:1.25rem; padding:0.5rem;">
+                <input type="text" name="q" value="{{ q }}" placeholder="Search wiki articles..."
+                    style="flex:1; border:none; background:transparent; padding:0.75rem 1.5rem; outline:none; font-size:1rem;">
+                <button type="submit" class="btn btn-primary"
+                    style="border-radius:1rem; padding:0.6rem 1.5rem;">Search</button>
+            </div>
+        </form>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:2.5rem;">
+        {% for page in pages %}
+        <a href="{% url 'wiki_pages:detail' page.slug %}" class="creative-card"
+            style="text-decoration:none; color:inherit;">
+            <div style="font-size:2.5rem; margin-bottom:1.5rem;">📖</div>
+            <h3 style="font-size:1.5rem; margin-bottom:1rem;">{{ page.title }}</h3>
+            <p style="color:var(--text-gray); font-size:0.9rem;">{{ page.content|truncatewords:20 }}</p>
+            <div class="card-footer" style="margin-top:1.5rem; padding-top:1.5rem; border-top:1px dashed #eee;">
+                <span class="explore-btn">Read More ➔</span>
+                <span style="font-size:0.75rem; color:var(--text-gray);">Updated {{ page.updated_at|date:"M d" }}</span>
+            </div>
+        </a>
+        {% empty %}
+        <div style="grid-column:1/-1; text-align:center; padding:6rem 0; color:var(--text-gray);">
+            <div style="font-size:4rem; margin-bottom:1.5rem;">📚</div>
+            <h3>The wiki is empty. Start documenting!</h3>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

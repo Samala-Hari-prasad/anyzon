@@ -1,0 +1,219 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="creative-header animate-in">
+    <h1>Where <span style="font-family: 'Playfair Display', serif; font-style: italic;">Creativity</span><br>Meets
+        Community</h1>
+    <p style="color: var(--text-gray); font-size: 1.3rem; max-width: 700px; margin: 0 auto; line-height: 1.8;">
+        Join 1.2 Lakh+ Indian creators sharing stories, art, and professional insights.
+        Connect with the largest creative network in Asia.
+    </p>
+    <div style="margin-top: 3rem; display: flex; gap: 1.5rem; justify-content: center;">
+        <a href="#explore" class="btn btn-primary">Start Creating</a>
+        <a href="{% url 'blog_engine:index' %}" class="btn"
+            style="background: white; border: 1px solid #ddd; color: var(--text-dark);">Read Stories</a>
+    </div>
+</section>
+
+<div class="app-grid" id="explore">
+    <a href="{% url 'blog_engine:index' %}" class="creative-card animate-in" style="animation-delay: 0.1s;">
+        <div>
+            <div class="card-icon">✍️</div>
+            <h3>Blog Engine</h3>
+            <p>Share your stories with a typography-focused layout. Now with localized Hindi & Regional support.</p>
+        </div>
+        <div class="card-footer"><span class="explore-btn">Explore ➔</span><span
+                style="font-size: 0.75rem; color: #10b981; font-weight: 700;">LIVE IN INDIA</span></div>
+    </a>
+
+    <a href="{% url 'forum_board:index' %}" class="creative-card animate-in" style="animation-delay: 0.2s;">
+        <div>
+            <div class="card-icon">💬</div>
+            <h3>Forum Board</h3>
+            <p>Engage in nested discussions and upvote the community's best ideas. Bharat's discussion hub.</p>
+        </div>
+        <div class="card-footer"><span class="explore-btn">Explore ➔</span><span
+                style="font-size: 0.75rem; color: #10b981; font-weight: 700;">TRENDING</span></div>
+    </a>
+
+    <a href="{% url 'photo_gallery:index' %}" class="creative-card animate-in" style="animation-delay: 0.3s;">
+        <div>
+            <div class="card-icon">📸</div>
+            <h3>Photo Gallery</h3>
+            <p>Showcase your visual art in a sleek masonry grid. Perfect for cultural & landscape shots.</p>
+        </div>
+        <div class="card-footer"><span class="explore-btn">Explore ➔</span><span
+                style="font-size: 0.75rem; color: #10b981; font-weight: 700;">9k+ UPLOADS</span></div>
+    </a>
+
+    <a href="{% url 'video_streamer:index' %}" class="creative-card animate-in" style="animation-delay: 0.4s;">
+        <div>
+            <div class="card-icon">🎥</div>
+            <h3>Video Streamer</h3>
+            <p>Host and watch high-quality video content. The next generation of Indian streaming.</p>
+        </div>
+        <div class="card-footer"><span class="explore-btn">Explore ➔</span><span
+                style="font-size: 0.75rem; color: var(--primary); font-weight: 700;">PREMIUM</span></div>
+    </a>
+
+    <a href="{% url 'portfolio_showcase:index' %}" class="creative-card animate-in" style="animation-delay: 0.5s;">
+        <div>
+            <div class="card-icon">💼</div>
+            <h3>Portfolio Showcase</h3>
+            <p>Highlight your professional projects. Build your brand for the global market.</p>
+        </div>
+        <div class="card-footer"><span class="explore-btn">Explore ➔</span><span
+                style="font-size: 0.75rem; color: #10b981; font-weight: 700;">PRO TOOLS</span></div>
+    </a>
+
+    <a href="{% url 'e_learning:index' %}" class="creative-card animate-in" style="animation-delay: 0.6s;">
+        <div>
+            <div class="card-icon">🎓</div>
+            <h3>E-Learning</h3>
+            <p>Structured video lessons from India's top mentors. Upskill for the digital age.</p>
+        </div>
+        <div class="card-footer"><span class="explore-btn">Explore ➔</span><span
+                style="font-size: 0.75rem; color: #fbbf24; font-weight: 700;">CERTIFIED</span></div>
+    </a>
+
+    <a href="{% url 'job_board:index' %}" class="creative-card animate-in" style="animation-delay: 0.7s;">
+        <div>
+            <div class="card-icon">🤝</div>
+            <h3>Job Board</h3>
+            <p>Find opportunities in Mumbai, Delhi, Bengaluru & more. Post vacancies for free.</p>
+        </div>
+        <div class="card-footer"><span class="explore-btn">Explore ➔</span><span
+                style="font-size: 0.75rem; color: #10b981; font-weight: 700;">450+ OPENINGS</span></div>
+    </a>
+
+    <a href="{% url 'event_planner:index' %}" class="creative-card animate-in" style="animation-delay: 0.8s;">
+        <div>
+            <div class="card-icon">🎟️</div>
+            <h3>Event Planner</h3>
+            <p>Discover workshops near you. Book tickets for the latest community meetups.</p>
+        </div>
+        <div class="card-footer"><span class="explore-btn">Explore ➔</span><span
+                style="font-size: 0.75rem; color: #10b981; font-weight: 700;">TICKETING</span></div>
+    </a>
+
+    <a href="{% url 'chat_room:index' %}" class="creative-card animate-in" style="animation-delay: 0.9s;">
+        <div>
+            <div class="card-icon">💬</div>
+            <h3>Chat Room</h3>
+            <p>Real-time messaging with beautiful speech bubble styles — just like Instagram DMs.</p>
+        </div>
+        <div class="card-footer"><span class="explore-btn">Explore ➔</span><span
+                style="font-size: 0.75rem; color: #10b981; font-weight: 700;">ACTIVE NOW</span></div>
+    </a>
+
+    <a href="{% url 'marketplace:index' %}" class="creative-card animate-in" style="animation-delay: 1.0s;">
+        <div>
+            <div class="card-icon">🛍️</div>
+            <h3>Marketplace</h3>
+            <p>Buy and sell unique items. Integrated with Rupee payments and local shipping.</p>
+        </div>
+        <div class="card-footer"><span class="explore-btn">Explore ➔</span><span
+                style="font-size: 0.75rem; color: #10b981; font-weight: 700;">HOT DEALS</span></div>
+    </a>
+
+    <a href="{% url 'review_system:index' %}" class="creative-card animate-in" style="animation-delay: 1.1s;">
+        <div>
+            <div class="card-icon">⭐</div>
+            <h3>Review System</h3>
+            <p>Share ratings and genuine feedback on creative tools, books, and services.</p>
+        </div>
+        <div class="card-footer"><span class="explore-btn">Explore ➔</span><span
+                style="font-size: 0.75rem; color: #10b981; font-weight: 700;">RATE IT</span></div>
+    </a>
+
+    <a href="{% url 'newsletter_sub:index' %}" class="creative-card animate-in" style="animation-delay: 1.2s;">
+        <div>
+            <div class="card-icon">✉️</div>
+            <h3>Newsletter</h3>
+            <p>Stay updated with India's best creative content every week in your inbox.</p>
+        </div>
+        <div class="card-footer"><span class="explore-btn">Subscribe ➔</span><span
+                style="font-size: 0.75rem; color: #10b981; font-weight: 700;">FREE</span></div>
+    </a>
+
+    <a href="{% url 'wiki_pages:index' %}" class="creative-card animate-in" style="animation-delay: 1.3s;">
+        <div>
+            <div class="card-icon">📖</div>
+            <h3>Wiki Pages</h3>
+            <p>Collaborative documentation built by the community. The Creative Hub knowledge base.</p>
+        </div>
+        <div class="card-footer"><span class="explore-btn">Explore ➔</span><span
+                style="font-size: 0.75rem; color: #10b981; font-weight: 700;">OPEN WIKI</span></div>
+    </a>
+
+    <a href="{% url 'poll_maker:index' %}" class="creative-card animate-in" style="animation-delay: 1.4s;">
+        <div>
+            <div class="card-icon">🗳️</div>
+            <h3>Poll Maker</h3>
+            <p>Gather community opinions with live progress bars and real-time vote counting.</p>
+        </div>
+        <div class="card-footer"><span class="explore-btn">Vote Now ➔</span><span
+                style="font-size: 0.75rem; color: #10b981; font-weight: 700;">LIVE POLLS</span></div>
+    </a>
+
+    <a href="{% url 'music_player:index' %}" class="creative-card animate-in" style="animation-delay: 1.5s;">
+        <div>
+            <div class="card-icon">🎵</div>
+            <h3>Music Player</h3>
+            <p>Listen to Bollywood, Indie, and Folk tracks from Indian community artists.</p>
+        </div>
+        <div class="card-footer"><span class="explore-btn">Listen ➔</span><span
+                style="font-size: 0.75rem; color: #10b981; font-weight: 700;">BHARAT BEATS</span></div>
+    </a>
+
+    <a href="{% url 'recipe_book:index' %}" class="creative-card animate-in" style="animation-delay: 1.6s;">
+        <div>
+            <div class="card-icon">🍛</div>
+            <h3>Recipe Book</h3>
+            <p>Share authentic desi recipes — Veg, Non-Veg, Desserts, and Snacks from across India.</p>
+        </div>
+        <div class="card-footer"><span class="explore-btn">Cook ➔</span><span
+                style="font-size: 0.75rem; color: #10b981; font-weight: 700;">DESI FOOD</span></div>
+    </a>
+
+    <a href="{% url 'weather_app:index' %}" class="creative-card animate-in" style="animation-delay: 1.7s;">
+        <div>
+            <div class="card-icon">🌤️</div>
+            <h3>Weather App</h3>
+            <p>Live weather data for Mumbai, Delhi, Bengaluru and 5 more major Indian cities.</p>
+        </div>
+        <div class="card-footer"><span class="explore-btn">Check Weather ➔</span><span
+                style="font-size: 0.75rem; color: #10b981; font-weight: 700;">8 CITIES</span></div>
+    </a>
+
+    <a href="{% url 'quiz_master:index' %}" class="creative-card animate-in" style="animation-delay: 1.8s;">
+        <div>
+            <div class="card-icon">🧠</div>
+            <h3>Quiz Master</h3>
+            <p>Test your knowledge with community quizzes. Win points and challenge friends.</p>
+        </div>
+        <div class="card-footer"><span class="explore-btn">Take a Quiz ➔</span><span
+                style="font-size: 0.75rem; color: var(--primary); font-weight: 700;">CHALLENGE</span></div>
+    </a>
+
+    <a href="{% url 'news_feed:index' %}" class="creative-card animate-in" style="animation-delay: 1.9s;">
+        <div>
+            <div class="card-icon">📰</div>
+            <h3>News Feed</h3>
+            <p>Breaking news across Tech, Art, Music and Film curated for Indian audiences.</p>
+        </div>
+        <div class="card-footer"><span class="explore-btn">Read News ➔</span><span
+                style="font-size: 0.75rem; color: #10b981; font-weight: 700;">BHARAT TODAY</span></div>
+    </a>
+
+    <a href="{% url 'ad_manager:index' %}" class="creative-card animate-in" style="animation-delay: 2.0s;">
+        <div>
+            <div class="card-icon">📢</div>
+            <h3>Ad Manager</h3>
+            <p>Launch community promotions and track campaign CTR, impressions and ₹ budget.</p>
+        </div>
+        <div class="card-footer"><span class="explore-btn">Explore ➔</span><span
+                style="font-size: 0.75rem; color: #10b981; font-weight: 700;">ANALYTICS</span></div>
+    </a>
+</div>
+{% endblock %}

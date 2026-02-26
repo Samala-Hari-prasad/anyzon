@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Profile | Enterprise Suite{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: center; align-items: center;">
+    <div class="glass-card animate-in" style="width: 100%; max-width: 600px;">
+        <h2 style="margin-bottom: 2rem;">Edit Your Profile</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div style="margin-bottom: 1.5rem;">
+                <label style="display: block; margin-bottom: 0.5rem; color: var(--text-gray);">Avatar</label>
+                <input type="file" name="avatar"
+                    style="width: 100%; padding: 0.75rem; border-radius: 0.5rem; border: 1px solid var(--glass-border); background: rgba(15, 23, 42, 0.5); color: white;">
+            </div>
+            <div style="margin-bottom: 1.5rem;">
+                <label style="display: block; margin-bottom: 0.5rem; color: var(--text-gray);">Location</label>
+                <input type="text" name="location" value="{{ profile.location }}"
+                    style="width: 100%; padding: 0.75rem; border-radius: 0.5rem; border: 1px solid var(--glass-border); background: rgba(15, 23, 42, 0.5); color: white;">
+            </div>
+            <div style="margin-bottom: 2rem;">
+                <label style="display: block; margin-bottom: 0.5rem; color: var(--text-gray);">Bio</label>
+                <textarea name="bio" rows="4"
+                    style="width: 100%; padding: 0.75rem; border-radius: 0.5rem; border: 1px solid var(--glass-border); background: rgba(15, 23, 42, 0.5); color: white;">{{ profile.bio }}</textarea>
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+                <a href="{% url 'user_profiles:index' %}" class="btn"
+                    style="background: rgba(255,255,255,0.1); color: white;">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

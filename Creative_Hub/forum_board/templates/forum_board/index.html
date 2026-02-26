@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Forum | Creative Hub{% endblock %}
+
+{% block content %}
+<div class="animate-in">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem;">
+        <h2>Community Discussions</h2>
+        <a href="#" class="btn btn-primary">Start New Thread</a>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+        {% for thread in threads %}
+        <div class="glass-card"
+            style="display: flex; gap: 2rem; align-items: center; padding: 1.5rem; background: white;">
+            <div style="display: flex; flex-direction: column; align-items: center; min-width: 60px;">
+                <a href="{% url 'forum_board:upvote' thread.pk %}"
+                    style="text-decoration: none; font-size: 1.5rem;">🔼</a>
+                <span style="font-weight: 700; font-size: 1.2rem;">{{ thread.votes }}</span>
+            </div>
+            <div style="flex: 1;">
+                <h3 style="margin-bottom: 0.5rem;">
+                    <a href="{% url 'forum_board:thread_detail' thread.pk %}"
+                        style="text-decoration: none; color: var(--text-dark);">{{ thread.title }}</a>
+                </h3>
+                <div style="display: flex; gap: 1rem; color: var(--text-gray); font-size: 0.85rem;">
+                    <span>By <strong>{{ thread.creator.username }}</strong></span>
+                    <span>•</span>
+                    <span>{{ thread.comments.count }} comments</span>
+                    <span>•</span>
+                    <span>{{ thread.created_at|timesince }} ago</span>
+                </div>
+            </div>
+            <div style="display: flex; gap: 0.5rem;">
+                <span
+                    style="background: #f1f5f9; padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 0.7rem; font-weight: 600;">Discussion</span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

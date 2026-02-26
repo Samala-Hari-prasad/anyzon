@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %}Tasks | Enterprise Suite{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem;"
+    class="animate-in">
+    <h2>Project Roadmap</h2>
+    <a href="{% url 'task_scheduler:add_task' %}" class="btn btn-primary">+ New Task</a>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; align-items: start;" class="animate-in">
+    <!-- To Do -->
+    <div class="glass-card" style="padding: 1.5rem; background: rgba(15, 23, 42, 0.4);">
+        <h3 style="margin-bottom: 2rem; display: flex; align-items: center; gap: 0.5rem;">
+            <span style="width: 10px; height: 10px; background: #94a3b8; border-radius: 50%;"></span>
+            To-Do
+        </h3>
+        <div style="display: flex; flex-direction: column; gap: 1rem;">
+            {% for task in todo %}
+            <div class="glass-card"
+                style="padding: 1rem; border-left: 4px solid {% if task.priority == 'high' %}#ef4444{% elif task.priority == 'medium' %}#f59e0b{% else %}#10b981{% endif %}; background: rgba(30, 41, 59, 0.8);">
+                <h4 style="margin-bottom: 0.5rem;">{{ task.title }}</h4>
+                <p style="font-size: 0.8rem; color: var(--text-gray); margin-bottom: 1rem;">{{
+                    task.description|truncatechars:60 }}</p>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 0.7rem; color: var(--primary);">Due: {{ task.due_date|default:"None"
+                        }}</span>
+                    <a href="{% url 'task_scheduler:update_status' task.pk 'doing' %}"
+                        style="text-decoration: none; font-size: 0.7rem; color: #818cf8;">Start →</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Doing -->
+    <div class="glass-card" style="padding: 1.5rem; background: rgba(15, 23, 42, 0.4);">
+        <h3 style="margin-bottom: 2rem; display: flex; align-items: center; gap: 0.5rem;">
+            <span style="width: 10px; height: 10px; background: #3b82f6; border-radius: 50%;"></span>
+            In Progress
+        </h3>
+        <div style="display: flex; flex-direction: column; gap: 1rem;">
+            {% for task in doing %}
+            <div class="glass-card"
+                style="padding: 1rem; border-left: 4px solid {% if task.priority == 'high' %}#ef4444{% elif task.priority == 'medium' %}#f59e0b{% else %}#10b981{% endif %}; background: rgba(30, 41, 59, 0.8);">
+                <h4 style="margin-bottom: 0.5rem;">{{ task.title }}</h4>
+                <p style="font-size: 0.8rem; color: var(--text-gray); margin-bottom: 1rem;">{{
+                    task.description|truncatechars:60 }}</p>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 0.7rem; color: var(--primary);">Due: {{ task.due_date|default:"None"
+                        }}</span>
+                    <a href="{% url 'task_scheduler:update_status' task.pk 'done' %}"
+                        style="text-decoration: none; font-size: 0.7rem; color: #10b981;">Complete ✓</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Done -->
+    <div class="glass-card" style="padding: 1.5rem; background: rgba(15, 23, 42, 0.4);">
+        <h3 style="margin-bottom: 2rem; display: flex; align-items: center; gap: 0.5rem;">
+            <span style="width: 10px; height: 10px; background: #10b981; border-radius: 50%;"></span>
+            Completed
+        </h3>
+        <div style="display: flex; flex-direction: column; gap: 1rem;">
+            {% for task in done %}
+            <div class="glass-card" style="padding: 1rem; opacity: 0.7; background: rgba(30, 41, 59, 0.8);">
+                <h4 style="margin-bottom: 0.5rem; text-decoration: line-through;">{{ task.title }}</h4>
+                <p style="font-size: 0.8rem; color: var(--text-gray);">Finished at: {{ task.created_at|date:"M d" }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

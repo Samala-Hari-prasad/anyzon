@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block title %}Marketplace | Creative Hub{% endblock %}
+{% block content %}
+<div class="animate-in" style="padding:6rem 5%;">
+    <div
+        style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:6rem; flex-wrap:wrap; gap:2rem;">
+        <div>
+            <h2 style="font-family:'Playfair Display',serif; font-size:3.5rem; margin-bottom:1rem;">Creative <span
+                    style="color:var(--primary)">Assets</span></h2>
+            <p style="color:var(--text-gray);">Buy unique crafts, digital assets, and tools directly from Indian
+                creators.</p>
+        </div>
+        <div style="display:flex; gap:1rem;">
+            <a href="?cat=" class="btn"
+                style="background:white; border:1px solid #ddd; color:var(--text-dark); text-decoration:none;">All
+                Items</a>
+            <a href="/admin/marketplace/product/add/" class="btn btn-primary" style="text-decoration:none;">+ Sell
+                Asset</a>
+        </div>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:3rem;">
+        {% for product in products %}
+        <div class="creative-card" style="padding:0; border-radius:2rem; overflow:hidden; background:white;">
+            <a href="{% url 'marketplace:detail' product.pk %}" style="text-decoration:none; color:inherit;">
+                <div style="width:100%; aspect-ratio:1/1; background:#f8fafc; overflow:hidden;">
+                    {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}"
+                        style="width:100%; height:100%; object-fit:cover; transition:transform 0.5s;">
+                    {% else %}
+                    <div
+                        style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-size:4rem; background:var(--creative-gradient);">
+                        🛍️</div>
+                    {% endif %}
+                </div>
+                <div style="padding:1.5rem;">
+                    <p
+                        style="font-size:0.75rem; font-weight:800; color:var(--text-gray); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:0.5rem;">
+                        {{ product.category.name }}</p>
+                    <h4
+                        style="font-size:1.25rem; margin-bottom:0.5rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                        {{ product.name }}</h4>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:1.5rem;">
+                        <span style="font-weight:800; font-size:1.4rem; color:var(--text-dark);">₹ {{ product.price
+                            }}</span>
+                        <p style="font-size:0.8rem; color:var(--text-gray);">By <strong>{{ product.seller.username
+                                }}</strong></p>
+                    </div>
+                </div>
+            </a>
+            <div style="padding:0 1.5rem 1.5rem;">
+                <a href="{% url 'marketplace:detail' product.pk %}" class="btn btn-primary"
+                    style="width:100%; border-radius:1rem; display:block; text-align:center; text-decoration:none;">View
+                    Details</a>
+            </div>
+        </div>
+        {% empty %}
+        <div style="grid-column:1/-1; text-align:center; padding:10rem 0;">
+            <div style="font-size:4rem; margin-bottom:2rem;">🛍️</div>
+            <p style="font-size:1.5rem; color:var(--text-gray);">No listings yet.</p>
+            <a href="/admin/marketplace/product/add/" class="btn btn-primary"
+                style="margin-top:2rem; display:inline-block; text-decoration:none;">+ Add First Product</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<style>
+    .creative-card:hover img {
+        transform: scale(1.1);
+    }
+</style>
+{% endblock %}

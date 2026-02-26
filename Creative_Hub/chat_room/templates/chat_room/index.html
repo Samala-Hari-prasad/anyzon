@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Chat | Creative Hub{% endblock %}
+
+{% block content %}
+<div class="animate-in" style="padding: 10rem 5%; text-align: center;">
+    <h2 style="font-family: 'Playfair Display', serif; font-size: 4rem; margin-bottom: 2rem;">Connect with <span
+            style="color: var(--primary);">Bharat</span></h2>
+    <p style="color: var(--text-gray); font-size: 1.3rem; max-width: 600px; margin: 0 auto 4rem;">
+        Join thousand of Indian creators in niche discussion rooms.
+        Real-time, creative, and community-driven.
+    </p>
+
+    <div
+        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2.5rem; max-width: 1000px; margin: 0 auto;">
+        {% for room in rooms %}
+        <a href="{% url 'chat_room:room_detail' room.slug %}" class="creative-card" style="text-align: left;">
+            <div class="room-avatar" style="margin-bottom: 1.5rem;">{{ room.name|first }}</div>
+            <h3>{{ room.name }}</h3>
+            <p>{{ room.description }}</p>
+            <div class="card-footer">
+                <span class="explore-btn">Enter Room ➔</span>
+            </div>
+        </a>
+        {% empty %}
+        <div style="grid-column: 1 / -1;" class="glass-card">
+            <p>No rooms available yet. Administrator is setting them up!</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}Quiz Master | Creative Hub{% endblock %}
+{% block content %}
+<div class="animate-in" style="padding:6rem 5%; max-width:900px; margin:0 auto;">
+    <div style="text-align:center; margin-bottom:5rem;">
+        <h2 style="font-family:'Playfair Display',serif; font-size:3.5rem; margin-bottom:1rem;">Quiz <span
+                style="color:var(--primary)">Master</span></h2>
+        <p style="color:var(--text-gray); font-size:1.2rem;">Test your knowledge, challenge the community.</p>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:3rem;">
+        {% for quiz in quizzes %}
+        <a href="{% url 'quiz_master:take' quiz.pk %}" style="text-decoration:none; color:inherit;">
+            <div class="creative-card">
+                <div style="font-size:3rem; margin-bottom:1.5rem;">🧠</div>
+                <h3 style="font-size:1.6rem; font-family:'Playfair Display',serif; margin-bottom:1rem;">{{ quiz.title }}
+                </h3>
+                <p style="color:var(--text-gray); margin-bottom:2rem;">{{ quiz.description|truncatewords:20 }}</p>
+                <div class="card-footer" style="padding-top:1rem; border-top: 1px dashed #eee;">
+                    <span class="explore-btn">Start Quiz ➔</span>
+                    <span
+                        style="font-size:0.8rem; background:#f1f5f9; padding:0.3rem 0.8rem; border-radius:99px; font-weight:700;">{{
+                        quiz.questions.count }} Qs</span>
+                </div>
+            </div>
+        </a>
+        {% empty %}
+        <div style="grid-column:1/-1; text-align:center; padding:8rem 0; color:var(--text-gray);">
+            <div style="font-size:4rem; margin-bottom:1.5rem;">🧠</div>
+            <h3>No quizzes created yet!</h3>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

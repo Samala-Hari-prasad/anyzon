@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="hero animate-in" style="margin-bottom: 4rem; position: relative;">
+    <div
+        style="position: absolute; top: -50px; right: 0; background: var(--primary); color: white; padding: 0.5rem 1.5rem; border-radius: 99px; font-weight: 800; font-size: 0.8rem; letter-spacing: 1px;">
+        BHARAT EDITION</div>
+    <h2 style="font-size: 3rem; margin-bottom: 1rem; color: #fff;">Enterprise Operations <span
+            style="color: var(--primary);">Suite</span></h2>
+    <p style="color: var(--text-gray); font-size: 1.2rem; max-width: 650px; line-height: 1.6;">
+        Advanced business management for Indian SMEs and Corporates.
+        Fully localized with ₹ Rupee support and IST scheduling.
+    </p>
+</section>
+
+<div class="app-grid">
+    <!-- 1. Auth System -->
+    <a href="{% url 'auth_system:login' %}" class="glass-card app-card animate-in" style="animation-delay: 0.1s;">
+        <div style="font-size: 2.5rem; margin-bottom: 1.5rem;">🔐</div>
+        <div>
+            <h3>Auth System</h3>
+            <p>Secure authentication, registration, and password management.</p>
+        </div>
+        <span class="status-tag status-live">Live</span>
+    </a>
+
+    <!-- 2. User Profiles -->
+    <a href="{% url 'user_profiles:index' %}" class="glass-card app-card animate-in" style="animation-delay: 0.2s;">
+        <div style="font-size: 2.5rem; margin-bottom: 1.5rem;">👤</div>
+        <div>
+            <h3>User Profiles</h3>
+            <p>Personalized dashboards featuring bios and activity tracking.</p>
+        </div>
+        <span class="status-tag status-live">Live</span>
+    </a>
+
+    <!-- 3. Inventory Manager -->
+    <a href="{% url 'inventory_manager:index' %}" class="glass-card app-card animate-in" style="animation-delay: 0.3s;">
+        <div style="font-size: 2.5rem; margin-bottom: 1.5rem;">📦</div>
+        <div>
+            <h3>Inventory Manager</h3>
+            <p>Real-time stock tracking with color-coded alerts.</p>
+        </div>
+        <span class="status-tag status-live">Live</span>
+    </a>
+
+    <!-- 4. Task Scheduler -->
+    <a href="{% url 'task_scheduler:index' %}" class="glass-card app-card animate-in" style="animation-delay: 0.4s;">
+        <div style="font-size: 2.5rem; margin-bottom: 1.5rem;">📅</div>
+        <div>
+            <h3>Task Scheduler</h3>
+            <p>Intuitive Kanban board for managing Indian business workflows.</p>
+        </div>
+        <span class="status-tag status-live">Live</span>
+    </a>
+
+    <!-- 5. Expense Tracker -->
+    <a href="{% url 'expense_tracker:index' %}" class="glass-card app-card animate-in" style="animation-delay: 0.5s;">
+        <div style="font-size: 2.5rem; margin-bottom: 1.5rem;">💳</div>
+        <div>
+            <h3>Expense Tracker</h3>
+            <p>Log transactions in ₹ and monitor monthly financial goals.</p>
+        </div>
+        <span class="status-tag status-live">Live</span>
+    </a>
+
+    <!-- 6. Notification Hub -->
+    <a href="{% url 'notification_hub:index' %}" class="glass-card app-card animate-in" style="animation-delay: 0.6s;">
+        <div style="font-size: 2.5rem; margin-bottom: 1.5rem;">🔔</div>
+        <div>
+            <h3>Notification Hub</h3>
+            <p>Sliding alert drawer triggered by system-wide signals.</p>
+        </div>
+        <span class="status-tag status-live">Live</span>
+    </a>
+
+    <!-- 7. Document Vault -->
+    <a href="{% url 'document_vault:index' %}" class="glass-card app-card animate-in" style="animation-delay: 0.7s;">
+        <div style="font-size: 2.5rem; margin-bottom: 1.5rem;">📂</div>
+        <div>
+            <h3>Document Vault</h3>
+            <p>Secure file storage with type-specific icons and permissions.</p>
+        </div>
+        <span class="status-tag status-live">Live</span>
+    </a>
+
+    <!-- 8. Feedback Collector -->
+    <a href="{% url 'feedback_collector:index' %}" class="glass-card app-card animate-in"
+        style="animation-delay: 0.8s;">
+        <div style="font-size: 2.5rem; margin-bottom: 1.5rem;">⭐</div>
+        <div>
+            <h3>Feedback Collector</h3>
+            <p>Multi-step survey forms with animated progress indicators.</p>
+        </div>
+        <span class="status-tag status-pending">Beta</span>
+    </a>
+
+    <!-- 9. Analytics Dashboard -->
+    <a href="{% url 'analytics_dashboard:index' %}" class="glass-card app-card animate-in"
+        style="animation-delay: 0.9s;">
+        <div style="font-size: 2.5rem; margin-bottom: 1.5rem;">📈</div>
+        <div>
+            <h3>Analytics Dashboard</h3>
+            <p>Data aggregation with metric cards for Indian performance.</p>
+        </div>
+        <span class="status-tag status-live">Live</span>
+    </a>
+
+    <!-- 10. Help Desk -->
+    <a href="{% url 'help_desk:index' %}" class="glass-card app-card animate-in" style="animation-delay: 1.0s;">
+        <div style="font-size: 2.5rem; margin-bottom: 1.5rem;">🎧</div>
+        <div>
+            <h3>Help Desk</h3>
+            <p>Split-screen support ticket system with active chat.</p>
+        </div>
+        <span class="status-tag status-pending">Development</span>
+    </a>
+</div>
+{% endblock %}

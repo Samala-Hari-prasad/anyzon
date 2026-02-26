@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block title %}Recipes | Creative Hub{% endblock %}
+{% block content %}
+<div class="animate-in" style="padding:6rem 5%;">
+    <div style="text-align:center; margin-bottom:5rem;">
+        <h2 style="font-family:'Playfair Display',serif; font-size:3.5rem; margin-bottom:1.5rem;">Desi <span
+                style="color:var(--primary)">Recipes</span></h2>
+        <div style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap;">
+            <a href="?"
+                style="text-decoration:none; padding:0.6rem 1.4rem; border-radius:99px; font-weight:700; font-size:0.85rem; background:{% if not cat %}var(--text-dark){% else %}white{% endif %}; color:{% if not cat %}white{% else %}var(--text-gray){% endif %}; border:1px solid #ddd;">All</a>
+            <a href="?cat=veg"
+                style="text-decoration:none; padding:0.6rem 1.4rem; border-radius:99px; font-weight:700; font-size:0.85rem; background:{% if cat == 'veg' %}var(--text-dark){% else %}white{% endif %}; color:{% if cat == 'veg' %}white{% else %}var(--text-gray){% endif %}; border:1px solid #ddd;">🥦
+                Vegetarian</a>
+            <a href="?cat=nonveg"
+                style="text-decoration:none; padding:0.6rem 1.4rem; border-radius:99px; font-weight:700; font-size:0.85rem; background:{% if cat == 'nonveg' %}var(--text-dark){% else %}white{% endif %}; color:{% if cat == 'nonveg' %}white{% else %}var(--text-gray){% endif %}; border:1px solid #ddd;">🍗
+                Non-Veg</a>
+            <a href="?cat=dessert"
+                style="text-decoration:none; padding:0.6rem 1.4rem; border-radius:99px; font-weight:700; font-size:0.85rem; background:{% if cat == 'dessert' %}var(--text-dark){% else %}white{% endif %}; color:{% if cat == 'dessert' %}white{% else %}var(--text-gray){% endif %}; border:1px solid #ddd;">🍮
+                Desserts</a>
+        </div>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:3rem;">
+        {% for recipe in recipes %}
+        <a href="{% url 'recipe_book:detail' recipe.pk %}" style="text-decoration:none; color:inherit;">
+            <div class="creative-card" style="padding:0; overflow:hidden; border-radius:2rem;">
+                <div
+                    style="height:240px; background:var(--creative-gradient); display:flex; align-items:center; justify-content:center; font-size:5rem; position:relative;">
+                    🍛
+                    <span
+                        style="position:absolute; bottom:1rem; left:1rem; background:white; padding:0.25rem 0.75rem; border-radius:99px; font-size:0.7rem; font-weight:800; color:var(--primary);">{{
+                        recipe.get_category_display|upper }}</span>
+                </div>
+                <div style="padding:2rem;">
+                    <h4 style="font-family:'Playfair Display',serif; font-size:1.5rem; margin-bottom:1rem;">{{
+                        recipe.title }}</h4>
+                    <div style="display:flex; gap:1.5rem; color:var(--text-gray); font-size:0.85rem; font-weight:600;">
+                        <span>⏱ Prep: {{ recipe.prep_time }}m</span>
+                        <span>🍳 Cook: {{ recipe.cook_time }}m</span>
+                        <span>🍽 Serves: {{ recipe.servings }}</span>
+                    </div>
+                </div>
+            </div>
+        </a>
+        {% empty %}
+        <div style="grid-column:1/-1; text-align:center; padding:8rem 0; color:var(--text-gray);">
+            <div style="font-size:4rem; margin-bottom:1.5rem;">🍲</div>
+            <h3>No recipes yet – add your first desi creation!</h3>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

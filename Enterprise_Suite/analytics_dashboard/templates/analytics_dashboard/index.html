@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Analytics | Enterprise Suite{% endblock %}
+
+{% block content %}
+<div class="animate-in">
+    <h2 style="margin-bottom: 3rem;">Site-Wide Analytics</h2>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+        <!-- Metric Card 1 -->
+        <div class="glass-card" style="padding: 2rem;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                <p style="color: var(--text-gray); font-weight: 500;">Inventory Assets</p>
+                <span style="color: #10b981; font-size: 0.8rem; font-weight: 700;">↑ 12%</span>
+            </div>
+            <h3 style="font-size: 2.5rem; margin-bottom: 0.5rem;">{{ data.total_products }}</h3>
+            <p style="font-size: 0.85rem; color: var(--text-gray);">Total products tracked across all warehouses.</p>
+        </div>
+
+        <!-- Metric Card 2 -->
+        <div class="glass-card" style="padding: 2rem;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                <p style="color: var(--text-gray); font-weight: 500;">Active Tasks</p>
+                <span style="color: #f59e0b; font-size: 0.8rem; font-weight: 700;">→ Stable</span>
+            </div>
+            <h3 style="font-size: 2.5rem; margin-bottom: 0.5rem;">{{ data.pending_tasks }}</h3>
+            <p style="font-size: 0.85rem; color: var(--text-gray);">Ongoing tasks in the project roadmap.</p>
+        </div>
+
+        <!-- Metric Card 3 -->
+        <div class="glass-card" style="padding: 2rem;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                <p style="color: var(--text-gray); font-weight: 500;">Operational Spend</p>
+                <span style="color: #ef4444; font-size: 0.8rem; font-weight: 700;">↓ 5%</span>
+            </div>
+            <h3 style="font-size: 2.5rem; margin-bottom: 0.5rem;">${{ data.total_expenses|floatformat:0 }}</h3>
+            <p style="font-size: 0.85rem; color: var(--text-gray);">Cumulative expenses logged this quarter.</p>
+        </div>
+
+        <!-- Metric Card 4 -->
+        <div class="glass-card" style="padding: 2rem;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                <p style="color: var(--text-gray); font-weight: 500;">Low Stock Alerts</p>
+                <span style="color: #ef4444; font-size: 0.8rem; font-weight: 700;">! Warning</span>
+            </div>
+            <h3 style="font-size: 2.5rem; margin-bottom: 0.5rem;">{{ data.low_stock_count }}</h3>
+            <p style="font-size: 0.85rem; color: var(--text-gray);">Items currently below critical stock levels.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

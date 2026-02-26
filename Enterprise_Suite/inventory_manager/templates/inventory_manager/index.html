@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}Inventory | Enterprise Suite{% endblock %}
+
+{% block content %}
+<div class="glass-card animate-in">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <h2>Product Inventory</h2>
+        <a href="{% url 'inventory_manager:add_product' %}" class="btn btn-primary">+ Add Product</a>
+    </div>
+
+    <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; color: var(--text-white);">
+            <thead>
+                <tr style="border-bottom: 1px solid var(--glass-border); text-align: left;">
+                    <th style="padding: 1rem;">SKU</th>
+                    <th style="padding: 1rem;">Product Name</th>
+                    <th style="padding: 1rem;">Category</th>
+                    <th style="padding: 1rem;">Stock</th>
+                    <th style="padding: 1rem;">Price</th>
+                    <th style="padding: 1rem;">Status</th>
+                    <th style="padding: 1rem;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                    <td style="padding: 1rem; font-family: monospace; color: var(--text-gray);">{{ product.sku }}</td>
+                    <td style="padding: 1rem; font-weight: 500;">{{ product.name }}</td>
+                    <td style="padding: 1rem; color: var(--text-gray);">{{ product.category }}</td>
+                    <td style="padding: 1rem;">{{ product.quantity }}</td>
+                    <td style="padding: 1rem;">${{ product.unit_price }}</td>
+                    <td style="padding: 1rem;">
+                        {% if product.status == "In Stock" %}
+                        <span class="status-tag status-live"
+                            style="background: rgba(16, 185, 129, 0.2); color: #10b981;">In Stock</span>
+                        {% elif product.status == "Low Stock" %}
+                        <span class="status-tag status-pending"
+                            style="background: rgba(245, 158, 11, 0.2); color: #f59e0b;">Low Stock</span>
+                        {% else %}
+                        <span class="status-tag" style="background: rgba(239, 68, 68, 0.2); color: #ef4444;">Out of
+                            Stock</span>
+                        {% endif %}
+                    </td>
+                    <td style="padding: 1rem;">
+                        <a href="{% url 'inventory_manager:delete_product' product.pk %}"
+                            style="color: #ef4444; text-decoration: none; font-size: 0.8rem;">Delete</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" style="padding: 3rem; text-align: center; color: var(--text-gray);">No products
+                        found. Start adding some!</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

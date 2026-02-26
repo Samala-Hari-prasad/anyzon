@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}Watch | Creative Hub{% endblock %}
+
+{% block content %}
+<div class="animate-in" style="padding: 2rem 5%;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem;">
+        <h2 style="font-family: 'Playfair Display', serif; font-size: 3rem;">Creative <span
+                style="color: var(--primary);">Streams</span></h2>
+        <button class="btn btn-primary">Upload Video</button>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 2.5rem;">
+        {% for video in videos %}
+        <div class="creative-card" style="padding: 0; overflow: hidden; border-radius: 1.5rem;">
+            <a href="{% url 'video_streamer:watch' video.pk %}" style="text-decoration: none; color: inherit;">
+                <div style="width: 100%; aspect-ratio: 16/9; background: #eee; position: relative;">
+                    {% if video.thumbnail %}
+                    <img src="{{ video.thumbnail.url }}" style="width: 100%; height: 100%; object-fit: cover;">
+                    {% else %}
+                    <div
+                        style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(45deg, #eee, #ddd);">
+                        <span style="font-size: 3rem;">🎬</span>
+                    </div>
+                    {% endif %}
+                    <span
+                        style="position: absolute; bottom: 1rem; right: 1rem; background: rgba(0,0,0,0.8); color: white; padding: 0.2rem 0.6rem; border-radius: 0.4rem; font-size: 0.8rem; font-weight: 700;">12:45</span>
+                </div>
+                <div style="padding: 1.5rem;">
+                    <div style="display: flex; gap: 1rem; align-items: flex-start;">
+                        <div
+                            style="width: 40px; height: 40px; border-radius: 50%; background: #f0f0f0; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--primary);">
+                            {{ video.uploaded_by.username|slice:":1"|upper }}</div>
+                        <div>
+                            <h4
+                                style="font-size: 1.1rem; margin-bottom: 0.4rem; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                                {{ video.title }}</h4>
+                            <p style="font-size: 0.85rem; color: var(--text-gray);">{{ video.uploaded_by.username }}</p>
+                            <p style="font-size: 0.85rem; color: var(--text-gray);">{{ video.views }} views • {{
+                                video.created_at|timesince }} ago</p>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% empty %}
+        <div style="grid-column: 1 / -1; padding: 10rem 0; text-align: center;">
+            <div style="font-size: 5rem; margin-bottom: 2rem;">📺</div>
+            <h3 style="font-size: 2rem; color: var(--text-gray);">No videos found in your region.</h3>
+            <p style="color: var(--text-gray); margin-top: 1rem;">Be the first one to upload a masterpiece!</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

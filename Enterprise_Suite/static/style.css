@@ -1,0 +1,196 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ── Dark Mode Tokens (Enterprise default = dark glassmorphism) ── */
+:root {
+    --primary: #6366f1;
+    --primary-hover: #4f46e5;
+    --bg: #0f172a;
+    --bg-card: rgba(30, 41, 59, 0.75);
+    --bg-body-gradient: radial-gradient(circle at top right, #1e1b4b, #0f172a);
+    --glass-border: rgba(255, 255, 255, 0.10);
+    --text-white: #f8fafc;
+    --text-gray: #94a3b8;
+    --accent: #10b981;
+    --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    --status-live-bg: rgba(16, 185, 129, 0.15);
+    --nav-bg: rgba(15, 23, 42, 0.90);
+}
+
+/* ── Light Mode Override ── */
+[data-theme="light"] {
+    --bg: #f1f5f9;
+    --bg-card: rgba(255, 255, 255, 0.85);
+    --bg-body-gradient: radial-gradient(circle at top right, #e0e7ff, #f1f5f9);
+    --glass-border: rgba(0, 0, 0, 0.07);
+    --text-white: #0f172a;
+    --text-gray: #64748b;
+    --shadow: 0 8px 32px rgba(0, 0, 0, 0.07);
+    --status-live-bg: rgba(16, 185, 129, 0.12);
+    --nav-bg: rgba(255, 255, 255, 0.85);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    transition: background 0.3s, color 0.3s;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-body-gradient);
+    color: var(--text-white);
+    min-height: 100vh;
+    overflow-x: hidden;
+    transition: background 0.4s ease, color 0.3s ease;
+}
+
+/* ── Theme Toggle ── */
+#theme-toggle {
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border);
+    border-radius: 99px;
+    padding: 0.45rem 0.9rem;
+    cursor: pointer;
+    color: var(--text-white);
+    font-weight: 600;
+    font-size: 0.8rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: all 0.3s;
+    font-family: 'Inter', sans-serif;
+    backdrop-filter: blur(10px);
+}
+
+#theme-toggle:hover {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+}
+
+.glass-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: var(--shadow);
+    transition: background 0.3s, border-color 0.3s;
+}
+
+.dashboard-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+header {
+    margin-bottom: 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    background: linear-gradient(to right, #818cf8, #c084fc);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.app-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.app-card {
+    transition: transform 0.3s ease, background 0.3s ease;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.app-card:hover {
+    transform: translateY(-5px);
+    filter: brightness(1.12);
+}
+
+.app-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+    color: var(--text-white);
+}
+
+.app-card p {
+    font-size: 0.875rem;
+    color: var(--text-gray);
+    line-height: 1.5;
+}
+
+.status-tag {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-top: 1rem;
+}
+
+.status-live {
+    background: var(--status-live-bg);
+    color: #10b981;
+}
+
+.status-pending {
+    background: rgba(245, 158, 11, 0.15);
+    color: #f59e0b;
+}
+
+.btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    font-family: 'Inter', sans-serif;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--primary-hover);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-in {
+    animation: fadeIn 0.8s ease forwards;
+}

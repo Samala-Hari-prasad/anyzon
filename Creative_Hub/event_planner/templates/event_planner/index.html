@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}Events | Creative Hub{% endblock %}
+{% block content %}
+<div class="animate-in" style="padding:6rem 5%;">
+    <div style="text-align:center; margin-bottom:5rem;">
+        <h2 style="font-family:'Playfair Display',serif; font-size:3.5rem; margin-bottom:1rem;">Live <span
+                style="color:var(--primary)">Events</span></h2>
+        <p style="color:var(--text-gray); max-width:600px; margin:0 auto; font-size:1.2rem;">Workshops, meetups and
+            conferences across Bharat.</p>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(360px,1fr)); gap:3rem;">
+        {% for event in events %}
+        <a href="{% url 'event_planner:detail' event.pk %}" class="creative-card"
+            style="text-decoration:none; color:inherit; padding:0; overflow:hidden; border-radius:2rem;">
+            <div
+                style="width:100%; aspect-ratio:16/9; background:var(--creative-gradient); display:flex; align-items:center; justify-content:center; font-size:4rem; position:relative;">
+                🎟️
+                <span
+                    style="position:absolute; top:1rem; right:1rem; background:white; font-size:0.75rem; font-weight:800; padding:0.3rem 0.8rem; border-radius:99px; color:var(--primary);">{{
+                    event.get_event_type_display }}</span>
+            </div>
+            <div style="padding:2rem;">
+                <h3 style="font-family:'Playfair Display',serif; font-size:1.6rem; margin-bottom:1rem;">{{ event.title
+                    }}</h3>
+                <div
+                    style="display:flex; flex-direction:column; gap:0.5rem; color:var(--text-gray); font-size:0.9rem; margin-bottom:1.5rem;">
+                    <span>📍 {{ event.venue }}, {{ event.city }}</span>
+                    <span>📅 {{ event.date|date:"D, d M Y • P" }}</span>
+                    <span>🎫 {{ event.seats_left }} seats left</span>
+                </div>
+                <div
+                    style="display:flex; justify-content:space-between; align-items:center; padding-top:1.5rem; border-top:1px dashed #eee;">
+                    <span style="font-weight:800; font-size:1.3rem;">{% if event.price == 0 %}FREE{% else %}₹{{
+                        event.price }}{% endif %}</span>
+                    <button class="btn btn-primary">Book Now</button>
+                </div>
+            </div>
+        </a>
+        {% empty %}
+        <div style="grid-column:1/-1; text-align:center; padding:8rem 0; color:var(--text-gray);">
+            <div style="font-size:4rem; margin-bottom:2rem;">🎪</div>
+            <h3>No events listed yet. Check back soon!</h3>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

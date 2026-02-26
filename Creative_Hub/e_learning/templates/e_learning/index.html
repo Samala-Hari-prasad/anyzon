@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block title %}E-Learning | Creative Hub{% endblock %}
+{% block content %}
+<div class="animate-in" style="padding:6rem 5%;">
+    <div style="text-align:center; margin-bottom:6rem;">
+        <h2 style="font-family:'Playfair Display',serif; font-size:3.5rem; margin-bottom:1rem;">Learn from <span
+                style="color:var(--primary)">India's Best</span></h2>
+        <p style="color:var(--text-gray); font-size:1.25rem; max-width:600px; margin:0 auto 3rem;">
+            Structured video courses by verified Indian creators. Certify your skills.
+        </p>
+        <a href="/admin/e_learning/course/add/" class="btn btn-primary" style="text-decoration:none;">+ Add Course</a>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); gap:3rem;">
+        {% for course in courses %}
+        <div class="creative-card" style="padding:0; overflow:hidden; border-radius:2rem;">
+            <div style="width:100%; aspect-ratio:16/9; background:#eee; overflow:hidden; position:relative;">
+                {% if course.thumbnail %}
+                <img src="{{ course.thumbnail.url }}"
+                    style="width:100%; height:100%; object-fit:cover; transition:transform 0.5s;">
+                {% else %}
+                <div
+                    style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:var(--creative-gradient); font-size:4rem;">
+                    🎓</div>
+                {% endif %}
+                <div
+                    style="position:absolute; top:1rem; left:1rem; background:white; padding:0.3rem 0.8rem; border-radius:99px; font-size:0.75rem; font-weight:800; color:var(--primary);">
+                    {% if course.price == 0 %}FREE{% else %}₹{{ course.price }}{% endif %}
+                </div>
+            </div>
+            <div style="padding:2rem;">
+                <h4 style="font-family:'Playfair Display',serif; font-size:1.5rem; margin-bottom:0.75rem;">{{
+                    course.title }}</h4>
+                <div
+                    style="display:flex; justify-content:space-between; align-items:center; color:var(--text-gray); font-size:0.9rem; margin-bottom:1.5rem;">
+                    <span>By <strong>{{ course.instructor.username }}</strong></span>
+                    <span>{{ course.lessons.count }} Lessons</span>
+                </div>
+                <a href="{% url 'e_learning:detail' course.pk %}" class="btn btn-primary"
+                    style="width:100%; display:block; text-align:center; text-decoration:none; border-radius:1rem;">Enroll
+                    Now</a>
+            </div>
+        </div>
+        {% empty %}
+        <div style="grid-column:1/-1; text-align:center; padding:8rem 0;">
+            <div style="font-size:4rem; margin-bottom:2rem;">🎓</div>
+            <p style="color:var(--text-gray); font-size:1.2rem;">No courses available yet.</p>
+            <a href="/admin/e_learning/course/add/" class="btn btn-primary"
+                style="margin-top:2rem; display:inline-block; text-decoration:none;">+ Create First Course</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<style>
+    .creative-card:hover img {
+        transform: scale(1.05);
+    }
+</style>
+{% endblock %}

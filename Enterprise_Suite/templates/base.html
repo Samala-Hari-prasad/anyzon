@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Enterprise Operations Suite{% endblock %}</title>
+    <meta name="description"
+        content="{% block meta_description %}A centralized management system for business efficiency.{% endblock %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    {% block extra_css %}{% endblock %}
+    <!-- Prevent flash of wrong theme -->
+    <script>
+        (function () {
+            if (localStorage.getItem('es-theme') === 'light') {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <header class="animate-in">
+            <div class="logo">
+                <a href="{% url 'dashboard' %}" style="text-decoration: none;">
+                    <h1>Enterprise<span>Suite</span></h1>
+                </a>
+            </div>
+            <nav>
+                <div class="user-info" style="display: flex; align-items: center; gap: 1.2rem;">
+                    <!-- 🌙 / ☀️ Theme Toggle -->
+                    <button id="theme-toggle" title="Toggle dark / light mode">☀️ Light</button>
+
+                    {% if user.is_authenticated %}
+                    <span style="color: var(--text-gray);">Welcome, <strong style="color: var(--text-white);">{{
+                            user.username }}</strong></span>
+                    <a href="{% url 'auth_system:logout' %}" class="btn btn-primary"
+                        style="margin-left: 0.5rem;">Logout</a>
+                    {% else %}
+                    <a href="{% url 'auth_system:login' %}" class="btn btn-primary">Login</a>
+                    {% endif %}
+                </div>
+            </nav>
+        </header>
+
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+
+        <footer style="margin-top: 5rem; text-align: center; padding-bottom: 2rem; color: var(--text-gray);">
+            <p>&copy; 2026 Enterprise Operations Suite — Bharat Edition. All Rights Reserved.</p>
+        </footer>
+    </div>
+
+    {% block extra_js %}{% endblock %}
+
+    <script>
+        (function () {
+            const html = document.documentElement;
+            const btn = document.getElementById('theme-toggle');
+
+            // Default for Enterprise Suite is DARK
+            function applyTheme(theme) {
+                if (theme === 'light') {
+                    html.setAttribute('data-theme', 'light');
+                    btn.textContent = '🌙 Dark';
+                } else {
+                    html.removeAttribute('data-theme');
+                    btn.textContent = '☀️ Light';
+                }
+                localStorage.setItem('es-theme', theme);
+            }
+
+            const saved = localStorage.getItem('es-theme') || 'dark';
+            applyTheme(saved);
+
+            btn.addEventListener('click', function () {
+                const isLight = html.getAttribute('data-theme') === 'light';
+                applyTheme(isLight ? 'dark' : 'light');
+            });
+        })();
+    </script>
+</body>
+
+</html>

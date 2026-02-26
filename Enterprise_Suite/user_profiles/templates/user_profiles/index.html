@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}My Profile | Enterprise Suite{% endblock %}
+
+{% block content %}
+<div class="glass-card animate-in">
+    <div style="display: flex; align-items: center; gap: 2rem; margin-bottom: 3rem;">
+        <div
+            style="width: 150px; height: 150px; border-radius: 50%; border: 4px solid var(--primary); overflow: hidden; background: #1e293b; display: flex; align-items: center; justify-content: center;">
+            {% if profile.avatar %}
+            <img src="{{ profile.avatar.url }}" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover;">
+            {% else %}
+            <span style="font-size: 3rem;">👤</span>
+            {% endif %}
+        </div>
+        <div>
+            <h2 style="font-size: 2.5rem; margin-bottom: 0.5rem;">{{ profile.user.username }}</h2>
+            <p style="color: var(--text-gray); font-size: 1.1rem;">{{ profile.location|default:"Location not set" }}</p>
+            <a href="{% url 'user_profiles:edit_profile' %}" class="btn btn-primary" style="margin-top: 1rem;">Edit
+                Profile</a>
+        </div>
+    </div>
+
+    <div style="margin-bottom: 3rem;">
+        <h3 style="margin-bottom: 1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem;">Biography
+        </h3>
+        <p style="color: var(--text-gray); line-height: 1.8;">{{ profile.bio|default:"No bio yet. Tell us about
+            yourself!" }}</p>
+    </div>
+
+    <div>
+        <h3 style="margin-bottom: 1.5rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem;">Recent
+            Activity</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
+            <div class="glass-card" style="padding: 1rem; text-align: center;">
+                <span style="font-size: 1.5rem; display: block; margin-bottom: 0.5rem;">📦</span>
+                <span class="status-tag status-live">Inventory Update</span>
+                <p style="font-size: 0.8rem; margin-top: 0.5rem; color: var(--text-gray);">2 hours ago</p>
+            </div>
+            <div class="glass-card" style="padding: 1rem; text-align: center;">
+                <span style="font-size: 1.5rem; display: block; margin-bottom: 0.5rem;">📝</span>
+                <span class="status-tag status-live">Task Completed</span>
+                <p style="font-size: 0.8rem; margin-top: 0.5rem; color: var(--text-gray);">Yesterday</p>
+            </div>
+            <div class="glass-card" style="padding: 1rem; text-align: center;">
+                <span style="font-size: 1.5rem; display: block; margin-bottom: 0.5rem;">💳</span>
+                <span class="status-tag status-live">Expense Logged</span>
+                <p style="font-size: 0.8rem; margin-top: 0.5rem; color: var(--text-gray);">3 days ago</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block title %}Jobs | Creative Hub{% endblock %}
+{% block content %}
+<div class="animate-in" style="padding:6rem 5%; max-width:1000px; margin:0 auto;">
+    <div
+        style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:5rem; flex-wrap:wrap; gap:2rem;">
+        <div>
+            <h2 style="font-family:'Playfair Display',serif; font-size:3.5rem; margin-bottom:1rem;">Career <span
+                    style="color:var(--primary)">Opportunities</span></h2>
+            <p style="color:var(--text-gray);">Find your place in India's leading creative firms.</p>
+        </div>
+        <a href="/admin/job_board/job/add/" class="btn btn-primary" style="text-decoration:none;">+ Post a Job</a>
+    </div>
+
+    <div style="display:flex; gap:1rem; margin-bottom:3rem; flex-wrap:wrap;">
+        <a href="?"
+            style="text-decoration:none; padding:0.6rem 1.2rem; background:var(--text-dark); color:white; border-radius:99px; font-weight:700; font-size:0.85rem;">All
+            Jobs</a>
+        <a href="?type=remote"
+            style="text-decoration:none; padding:0.6rem 1.2rem; background:white; border:1px solid #ddd; border-radius:99px; font-weight:700; font-size:0.85rem; color:var(--text-gray);">Remote</a>
+        <a href="?type=full"
+            style="text-decoration:none; padding:0.6rem 1.2rem; background:white; border:1px solid #ddd; border-radius:99px; font-weight:700; font-size:0.85rem; color:var(--text-gray);">Full-time</a>
+        <a href="?type=contract"
+            style="text-decoration:none; padding:0.6rem 1.2rem; background:white; border:1px solid #ddd; border-radius:99px; font-weight:700; font-size:0.85rem; color:var(--text-gray);">Contract</a>
+    </div>
+
+    <div style="display:flex; flex-direction:column; gap:1.5rem;">
+        {% for job in jobs %}
+        <div class="creative-card"
+            style="display:flex; flex-direction:row; align-items:center; padding:2.5rem; gap:2.5rem; flex-wrap:wrap;">
+            <div
+                style="width:80px; height:80px; background:#f8fafc; border-radius:1.5rem; display:flex; align-items:center; justify-content:center; font-size:2rem; flex-shrink:0; border:1px solid #eee;">
+                🏢</div>
+            <div style="flex:1; min-width:200px;">
+                <h3 style="font-family:'Playfair Display',serif; font-size:1.6rem; margin-bottom:0.5rem;">{{ job.title
+                    }}</h3>
+                <div
+                    style="display:flex; gap:1.5rem; color:var(--text-gray); font-size:0.95rem; font-weight:600; flex-wrap:wrap;">
+                    <span>{{ job.company.name }}</span>
+                    <span>•</span>
+                    <span>{{ job.company.location }}</span>
+                    <span>•</span>
+                    <span style="color:#10b981;">₹ {{ job.salary_range }}</span>
+                </div>
+            </div>
+            <div style="text-align:right; flex-shrink:0;">
+                <span
+                    style="display:block; padding:0.4rem 1rem; background:#f1f5f9; border-radius:99px; font-size:0.75rem; font-weight:800; text-transform:uppercase; margin-bottom:1rem;">{{
+                    job.get_job_type_display }}</span>
+                <a href="{% url 'job_board:detail' job.pk %}" class="btn btn-primary"
+                    style="padding:0.6rem 1.4rem; font-size:0.9rem; text-decoration:none;">View Details</a>
+            </div>
+        </div>
+        {% empty %}
+        <div class="creative-card" style="text-align:center; padding:5rem;">
+            <div style="font-size:4rem; margin-bottom:1.5rem;">🤝</div>
+            <p style="color:var(--text-gray); font-size:1.2rem;">No openings yet.</p>
+            <a href="/admin/job_board/job/add/" class="btn btn-primary"
+                style="margin-top:2rem; display:inline-block; text-decoration:none;">+ Post the First Job</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

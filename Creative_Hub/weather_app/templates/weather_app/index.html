@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block title %}Weather | Creative Hub{% endblock %}
+{% block content %}
+<div class="animate-in" style="padding:6rem 5%; max-width:1100px; margin:0 auto;">
+    <div style="text-align:center; margin-bottom:4rem;">
+        <h2 style="font-family:'Playfair Display',serif; font-size:3.5rem; margin-bottom:2rem;">Bharat <span
+                style="color:var(--primary)">Weather</span></h2>
+        <form method="GET" style="max-width:400px; margin:0 auto;">
+            <div style="display:flex; gap:1rem; background:#f8fafc; border:1px solid #e2e8f0; border-radius:1.25rem; padding:0.5rem; transition:border-color 0.2s;"
+                onfocus="this.style.borderColor='var(--primary)'">
+                <input type="text" name="city" value="{{ city_query }}" placeholder="Search city..."
+                    style="flex:1; border:none; background:transparent; padding:0.75rem 1rem; outline:none; font-size:1rem;">
+                <button type="submit" class="btn btn-primary"
+                    style="border-radius:1rem; padding:0.6rem 1.2rem;">🔍</button>
+            </div>
+        </form>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:2.5rem;">
+        {% for city in cities %}
+        <div class="creative-card" style="text-align:center; padding:3rem 2.5rem; position:relative; overflow:hidden;">
+            <div style="position:absolute; top:-30px; right:-30px; font-size:8rem; opacity:0.06;">{{ city.icon }}</div>
+            <div style="font-size:4.5rem; margin-bottom:1rem;">{{ city.icon }}</div>
+            <h3 style="font-size:1.6rem; font-weight:800; margin-bottom:0.5rem;">{{ city.name }}</h3>
+            <div
+                style="font-size:3.5rem; font-weight:800; font-family:'Playfair Display',serif; margin:1.5rem 0; color:var(--primary);">
+                {{ city.temp }}</div>
+            <p style="color:var(--text-gray); font-weight:600; margin-bottom:2rem;">{{ city.condition }}</p>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+                <div style="background:#f8fafc; border-radius:1rem; padding:1rem;">
+                    <div
+                        style="font-size:0.7rem; color:var(--text-gray); font-weight:700; text-transform:uppercase; letter-spacing:1px;">
+                        Humidity</div>
+                    <div style="font-weight:800; font-size:1.1rem; margin-top:0.25rem;">{{ city.humidity }}</div>
+                </div>
+                <div style="background:#f8fafc; border-radius:1rem; padding:1rem;">
+                    <div
+                        style="font-size:0.7rem; color:var(--text-gray); font-weight:700; text-transform:uppercase; letter-spacing:1px;">
+                        Wind</div>
+                    <div style="font-weight:800; font-size:1.1rem; margin-top:0.25rem;">{{ city.wind }}</div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div style="grid-column:1/-1; text-align:center; padding:6rem 0; color:var(--text-gray);">
+            <div style="font-size:4rem; margin-bottom:1.5rem;">🌏</div>
+            <h3>No cities matched "{{ city_query }}"</h3>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
