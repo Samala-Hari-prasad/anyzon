@@ -13,15 +13,31 @@
     }
 
     .auth-logo {
-        font-size: 32px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        line-height: 0.8;
         font-weight: 800;
-        color: var(--az-dark);
+        color: #111 !important;
+        font-size: 36px;
+        letter-spacing: -1px;
         text-decoration: none;
-        margin-bottom: 20px;
+        margin-bottom: 25px;
+        position: relative;
+        padding-bottom: 10px;
     }
 
-    .auth-logo span {
-        color: var(--az-orange);
+    .auth-logo::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 15px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 20'%3E%3Cpath d='M5,5 Q50,25 95,5' fill='none' stroke='%23f08804' stroke-width='4' stroke-linecap='round'/%3E%3Cpath d='M90,2 L95,6 L90,10' fill='none' stroke='%23f08804' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-size: contain;
     }
 
     .auth-card {
@@ -145,7 +161,7 @@
 
 {% block content %}
 <div class="auth-bg">
-    <a href="{% url 'product_list' %}" class="auth-logo">Any<span>Zone</span></a>
+    <a href="{% url 'product_list' %}" class="auth-logo">anyzon</a>
 
     {% if messages %}
     <div class="messages">
@@ -196,7 +212,7 @@
             <a href="#" class="mx-2 text-decoration-none" style="color: #0066c0;">Privacy Notice</a>
             <a href="#" class="mx-2 text-decoration-none" style="color: #0066c0;">Help</a>
         </div>
-        <p style="font-size: 11px;">© 2021-2026, anyzon, Inc. or its affiliates</p>
+        <p style="font-size: 11px;">© 2021-2026, Anyzon, Inc. or its affiliates</p>
     </footer>
 </div>
 {% endblock %}
